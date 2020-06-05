@@ -58,7 +58,7 @@ public class MainLayout extends AppLayout implements RouterLayout {
                 "img/table-logo.png");
 
         final Image image = new Image(resolvedImage, "");
-        final Label title = new Label("Bookstore");
+        final Label title = new Label("Provento");
         top.add(image, title);
         top.add(title);
         addToNavbar(top);
