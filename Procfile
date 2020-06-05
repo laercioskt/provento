@@ -1,1 +1,1 @@
-web: java -jar target/provento-1.0.jar $PORT
+web: java -jar target/provento-1.0.jar --port $PORT
