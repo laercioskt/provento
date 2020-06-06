@@ -1,6 +1,8 @@
 package br.com.laercioskt.backend.data;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -11,6 +13,7 @@ import java.util.Objects;
 public class Category implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     private int id = -1;
     @Size(min = 2, message = "Category name must be at least two characters")
@@ -60,4 +63,23 @@ public class Category implements Serializable {
 
         return Objects.hash(id);
     }
+
+    public static class CategoryBuilder {
+
+        private String name;
+
+        public CategoryBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Category build() {
+            Category category = new Category();
+            category.setName(name);
+            return category;
+        }
+    }
+
+//    new CategoryBuilder().withName("Category " + i).build()
+
 }

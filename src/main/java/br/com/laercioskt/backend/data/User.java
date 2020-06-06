@@ -1,8 +1,6 @@
 package br.com.laercioskt.backend.data;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -14,6 +12,7 @@ import java.util.Set;
 public class User implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     private int id = -1;
     @NotNull
@@ -25,7 +24,7 @@ public class User implements Serializable {
     @NotNull
     private UserStatus status = UserStatus.ACTIVE;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<Category> category = new HashSet<>();
 
     public int getId() {

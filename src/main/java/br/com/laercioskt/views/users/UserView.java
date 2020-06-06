@@ -47,7 +47,7 @@ public class UserView extends HorizontalLayout implements HasUrlParameter<String
         grid.asSingleSelect().addValueChangeListener(
                 event -> viewLogic.rowSelected(event.getValue()));
         form = new UserForm(viewLogic);
-        form.setCategories(DataService.get().getAllCategories());
+        form.setCategories(userService.getAllCategories());
         final VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.add(topLayout);
         barAndGridLayout.add(grid);
