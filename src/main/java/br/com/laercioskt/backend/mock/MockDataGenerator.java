@@ -130,7 +130,7 @@ public class MockDataGenerator {
     }
 
     private static String generateNameUser() {
-        return user1[random.nextInt(user1.length)] + " "
+        return user1[random.nextInt(user1.length)] + "."
                 + word2[random.nextInt(user2.length)];
     }
 
