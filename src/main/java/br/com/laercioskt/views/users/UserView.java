@@ -41,7 +41,9 @@ public class UserView extends HorizontalLayout implements HasUrlParameter<String
         setSizeFull();
         final HorizontalLayout topLayout = createTopBar();
         grid = new UserGrid();
-        dataProvider = new UserDataProvider(userService);
+        dataProvider = new UserDataProvider(userService,
+                query -> userService.findAll(query.getOffset(), query.getLimit(), filter.getValue()).stream(),
+                query -> (int) userService.count());
         grid.setDataProvider(dataProvider);
         // Allows user to select a single row in the grid.
         grid.asSingleSelect().addValueChangeListener(
@@ -67,7 +69,7 @@ public class UserView extends HorizontalLayout implements HasUrlParameter<String
         filter.setPlaceholder("Filter name, availability or category");
         // Apply the filter to grid's data provider. TextField value is never
         filter.addValueChangeListener(
-                event -> dataProvider.setFilter(event.getValue()));
+                event -> dataProvider.refreshAll());
         // A shortcut to focus on the textField by pressing ctrl + F
         filter.addFocusShortcut(Key.KEY_F, KeyModifier.CONTROL);
 

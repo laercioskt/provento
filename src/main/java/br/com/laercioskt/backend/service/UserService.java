@@ -5,6 +5,7 @@ import br.com.laercioskt.backend.data.User;
 import br.com.laercioskt.backend.repository.CategoryRepository;
 import br.com.laercioskt.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -24,6 +25,14 @@ public class UserService {
 
     public Iterable<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    public List<User> findAll(int offset, int limit, String filterText) {
+        return userRepository.findAll(PageRequest.of(offset, limit)).toList();
+    }
+
+    public long count() {
+        return userRepository.count();
     }
 
     public void updateUser(User user) {

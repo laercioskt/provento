@@ -1,23 +1,23 @@
 package br.com.laercioskt.views.users;
 
 import br.com.laercioskt.backend.data.User;
+import br.com.laercioskt.backend.data.User.UserFilter;
 import br.com.laercioskt.backend.service.UserService;
-import com.vaadin.flow.data.provider.ListDataProvider;
+import com.vaadin.flow.data.provider.CallbackDataProvider;
 
-import java.util.Collection;
 import java.util.Locale;
 import java.util.Objects;
 
-public class UserDataProvider extends ListDataProvider<User> {
+public class UserDataProvider extends CallbackDataProvider<User, UserFilter> {
 
     private final UserService service;
 
     /** Text filter that can be changed separately. */
     private String filterText = "";
 
-    public UserDataProvider(UserService service) {
-        super((Collection<User>) service.getAllUsers());
-
+    public UserDataProvider(UserService service, FetchCallback<User, UserFilter> fetchCallback,
+                            CountCallback<User, UserFilter> countCallback) {
+        super(fetchCallback, countCallback);
         this.service = service;
     }
 
@@ -64,9 +64,9 @@ public class UserDataProvider extends ListDataProvider<User> {
         }
         this.filterText = filterText.trim().toLowerCase(Locale.ENGLISH);
 
-        setFilter(user -> passesFilter(user.getUserName(), this.filterText)
-                || passesFilter(user.getStatus(), this.filterText)
-                || passesFilter(user.getCategory(), this.filterText));
+//        setFilter(user -> passesFilter(user.getUserName(), this.filterText)
+//                || passesFilter(user.getStatus(), this.filterText)
+//                || passesFilter(user.getCategory(), this.filterText));
     }
 
     @Override
