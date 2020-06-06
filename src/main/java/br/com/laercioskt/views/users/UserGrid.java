@@ -11,11 +11,6 @@ import java.text.DecimalFormat;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-/**
- * Grid of users, handling the visual presentation and filtering of a set of
- * items. This version uses an in-memory data source that is suitable for small
- * data sets.
- */
 public class UserGrid extends Grid<User> {
 
     public UserGrid() {
@@ -63,21 +58,18 @@ public class UserGrid extends Grid<User> {
     private void setColumnVisibility(int width) {
         if (width > 800) {
             getColumnByKey("username").setVisible(true);
-            getColumnByKey("price").setVisible(true);
-            getColumnByKey("availability").setVisible(true);
-            getColumnByKey("stock").setVisible(true);
+            getColumnByKey("password").setVisible(true);
+            getColumnByKey("status").setVisible(true);
             getColumnByKey("category").setVisible(true);
         } else if (width > 550) {
             getColumnByKey("username").setVisible(true);
-            getColumnByKey("price").setVisible(true);
-            getColumnByKey("availability").setVisible(false);
-            getColumnByKey("stock").setVisible(false);
+            getColumnByKey("password").setVisible(true);
+            getColumnByKey("status").setVisible(false);
             getColumnByKey("category").setVisible(true);
         } else {
             getColumnByKey("username").setVisible(true);
-            getColumnByKey("price").setVisible(true);
-            getColumnByKey("availability").setVisible(false);
-            getColumnByKey("stock").setVisible(false);
+            getColumnByKey("password").setVisible(true);
+            getColumnByKey("status").setVisible(false);
             getColumnByKey("category").setVisible(false);
         }
     }

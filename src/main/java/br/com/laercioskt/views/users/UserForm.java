@@ -1,8 +1,7 @@
 package br.com.laercioskt.views.users;
 
-import br.com.laercioskt.backend.data.Availability;
-import br.com.laercioskt.backend.data.Category;
-import br.com.laercioskt.backend.data.User;
+import java.util.Collection;
+
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyModifier;
 import com.vaadin.flow.component.button.Button;
@@ -18,24 +17,18 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.converter.StringToBigDecimalConverter;
-import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.data.value.ValueChangeMode;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Collection;
-import java.util.Locale;
+import br.com.laercioskt.backend.data.Availability;
+import br.com.laercioskt.backend.data.Category;
+import br.com.laercioskt.backend.data.User;
 
-/**
- * A form for editing a single user.
- */
 public class UserForm extends Div {
 
     private final VerticalLayout content;
 
     private final TextField userName;
+    private final TextField password;
     private final TextField price;
     private final TextField stockCount;
     private final Select<Availability> availability;
@@ -48,46 +41,6 @@ public class UserForm extends Div {
     private final UserViewLogic viewLogic;
     private final Binder<User> binder;
     private User currentUser;
-
-    private static class PriceConverter extends StringToBigDecimalConverter {
-
-        public PriceConverter() {
-            super(BigDecimal.ZERO, "Cannot convert value to a number.");
-        }
-
-        @Override
-        protected NumberFormat getFormat(Locale locale) {
-            // Always display currency with two decimals
-            final NumberFormat format = super.getFormat(locale);
-            if (format instanceof DecimalFormat) {
-                format.setMaximumFractionDigits(2);
-                format.setMinimumFractionDigits(2);
-            }
-            return format;
-        }
-    }
-
-    private static class StockCountConverter extends StringToIntegerConverter {
-
-        public StockCountConverter() {
-            super(0, "Could not convert value to " + Integer.class.getName()
-                    + ".");
-        }
-
-        @Override
-        protected NumberFormat getFormat(Locale locale) {
-            // Do not use a thousands separator, as HTML5 input type
-            // number expects a fixed wire/DOM number format regardless
-            // of how the browser presents it to the user (which could
-            // depend on the browser locale).
-            final DecimalFormat format = new DecimalFormat();
-            format.setMaximumFractionDigits(0);
-            format.setDecimalSeparatorAlwaysShown(false);
-            format.setParseIntegerOnly(true);
-            format.setGroupingUsed(false);
-            return format;
-        }
-    }
 
     public UserForm(UserViewLogic sampleCrudLogic) {
         setClassName("user-form");
@@ -105,6 +58,12 @@ public class UserForm extends Div {
         userName.setValueChangeMode(ValueChangeMode.EAGER);
         content.add(userName);
 
+        password = new TextField("Password");
+        password.setWidth("100%");
+        password.setRequired(true);
+        password.setValueChangeMode(ValueChangeMode.EAGER);
+        content.add(password);
+        
         price = new TextField("Price");
         price.setSuffixComponent(new Span("€"));
         price.addThemeVariants(TextFieldVariant.LUMO_ALIGN_RIGHT);

@@ -1,19 +1,24 @@
 package br.com.laercioskt.views.users;
 
-import br.com.laercioskt.backend.DataService;
 import br.com.laercioskt.backend.data.User;
+import br.com.laercioskt.backend.service.UserService;
 import com.vaadin.flow.data.provider.ListDataProvider;
 
+import java.util.Collection;
 import java.util.Locale;
 import java.util.Objects;
 
 public class UserDataProvider extends ListDataProvider<User> {
 
+    private final UserService service;
+
     /** Text filter that can be changed separately. */
     private String filterText = "";
 
-    public UserDataProvider() {
-        super(DataService.get().getAllUsers());
+    public UserDataProvider(UserService service) {
+        super((Collection<User>) service.getAllUsers());
+
+        this.service = service;
     }
 
     /**
@@ -25,7 +30,7 @@ public class UserDataProvider extends ListDataProvider<User> {
     public void save(User user) {
         final boolean newUser = user.isNewUser();
 
-        DataService.get().updateUser(user);
+        service.updateUser(user);
         if (newUser) {
             refreshAll();
         } else {
@@ -40,7 +45,7 @@ public class UserDataProvider extends ListDataProvider<User> {
      *            the user to be deleted
      */
     public void delete(User user) {
-        DataService.get().deleteUser(user.getId());
+        service.deleteUser(user.getId());
         refreshAll();
     }
 

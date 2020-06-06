@@ -2,6 +2,8 @@ package br.com.laercioskt.views.users;
 
 import br.com.laercioskt.backend.DataService;
 import br.com.laercioskt.backend.data.User;
+import br.com.laercioskt.backend.mock.MockDataService;
+import br.com.laercioskt.backend.service.UserService;
 import br.com.laercioskt.views.MainLayout;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyModifier;
@@ -13,32 +15,33 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.*;
+import org.atmosphere.config.service.Post;
+import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- * A view for performing create-read-update-delete operations on users.
- * <p>
- * See also {@link UserViewLogic} for fetching the data, the actual CRUD
- * operations and controlling the view based on events from outside.
- */
+import javax.annotation.PostConstruct;
+
 @Route(value = "Users", layout = MainLayout.class)
-public class UserView extends HorizontalLayout
-        implements HasUrlParameter<String> {
+public class UserView extends HorizontalLayout implements HasUrlParameter<String> {
 
     public static final String VIEW_NAME = "Users";
+
     private final UserGrid grid;
     private final UserForm form;
+
     private TextField filter;
 
     private final UserViewLogic viewLogic = new UserViewLogic(this);
+
     private Button newUser;
 
-    private final UserDataProvider dataProvider = new UserDataProvider();
+    private final UserDataProvider dataProvider;
 
-    public UserView() {
+    public UserView(@Autowired UserService userService) {
         // Sets the width and the height of InventoryView to "100%".
         setSizeFull();
         final HorizontalLayout topLayout = createTopBar();
         grid = new UserGrid();
+        dataProvider = new UserDataProvider(userService);
         grid.setDataProvider(dataProvider);
         // Allows user to select a single row in the grid.
         grid.asSingleSelect().addValueChangeListener(

@@ -12,14 +12,6 @@ public class AddMetaServiceInitListener implements VaadinServiceInitListener {
 
     @Override
     public void serviceInit(ServiceInitEvent initEvent) {
-        System.out.println("salkdjfhsldkjfhaskldf");
-        System.out.println("salkdjfhsldkjfhaskldf");
-        System.out.println("salkdjfhsldkjfhaskldf");
-        System.out.println("salkdjfhsldkjfhaskldf");
-        System.out.println("salkdjfhsldkjfhaskldf");
-        System.out.println("salkdjfhsldkjfhaskldf");
-        System.out.println("salkdjfhsldkjfhaskldf");
-
         final AccessControl accessControl = AccessControlFactory.getInstance().createAccessControl();
 
         initEvent.getSource().addUIInitListener(uiInitEvent -> {

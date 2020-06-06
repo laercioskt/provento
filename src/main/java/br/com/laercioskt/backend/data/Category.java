@@ -1,12 +1,16 @@
 package br.com.laercioskt.backend.data;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public class Category implements Serializable {
 
+    @Id
     @NotNull
     private int id = -1;
     @Size(min = 2, message = "Category name must be at least two characters")

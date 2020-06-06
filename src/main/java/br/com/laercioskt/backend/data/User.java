@@ -1,13 +1,19 @@
 package br.com.laercioskt.backend.data;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Entity
 public class User implements Serializable {
 
+    @Id
     @NotNull
     private int id = -1;
     @NotNull
@@ -19,7 +25,8 @@ public class User implements Serializable {
     @NotNull
     private UserStatus status = UserStatus.ACTIVE;
 
-    private Set<Category> category;
+    @ElementCollection
+    private Set<Category> category = new HashSet<>();
 
     public int getId() {
         return id;
