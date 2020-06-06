@@ -7,6 +7,7 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.login.LoginForm;
+import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -36,7 +37,7 @@ public class LoginScreen extends FlexLayout {
         LoginForm loginForm = new LoginForm();
         loginForm.addLoginListener(this::login);
         loginForm.addForgotPasswordListener(
-                event -> Notification.show("Hint: same as username"));
+                event -> Notification.show("Dica: a senha e a mesma que o usuario"));
 
         // layout to center login form when there is sufficient screen space
         FlexLayout centeringLayout = new FlexLayout();

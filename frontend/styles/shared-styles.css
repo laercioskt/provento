@@ -1,5 +1,4 @@
 .login-information {
-    min-width: 300px;
     flex: 0;
     background: var(--lumo-primary-color-50pct);
 }
