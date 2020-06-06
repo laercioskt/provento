@@ -16,14 +16,19 @@ public class MockDataGenerator {
             "Children's books", "Best sellers", "Romance", "Mystery",
             "Thriller", "Sci-fi", "Non-fiction", "Cookbooks"};
 
-    private static String[] user1 = new String[]{"Birion", "Mastering",
-            "The secrets of", "Avoiding", "For fun and profit: ",
-            "How to fail at", "10 important facts about",
-            "The ultimate guide to", "Book of", "Surviving", "Encyclopedia of",
-            "Very much", "Learning the basics of", "The cheap way to",
-            "Being awesome at", "The life changer:", "Flurat:",
-            "Becoming one with", "Beginners guide to",
-            "The complete visual guide to", "The mother of all references:"};
+    private static String[] user1 = new String[]{"paulo", "joao",
+            "romeu", "flavio", "ana",
+            "lucas", "jairo",
+            "laercio", "luiz", "junior", "amanda",
+            "rodrigo", "ronaldo", "roberto",
+            "odair", "jessica", "juliana",
+            "carlos", "kelli",
+            "fabio", "kaio"};
+    
+    private static String[] user2 = new String[]{"junior", "godoy",
+            "depaula", "sila", "bolsonaro",
+            "lucas", "jairo",
+            "nunes", "santos"};
 
     private static String[] word1 = new String[]{"The art of", "Mastering",
             "The secrets of", "Avoiding", "For fun and profit: ",
@@ -126,7 +131,7 @@ public class MockDataGenerator {
 
     private static String generateNameUser() {
         return user1[random.nextInt(user1.length)] + " "
-                + word2[random.nextInt(word2.length)];
+                + word2[random.nextInt(user2.length)];
     }
 
 }
