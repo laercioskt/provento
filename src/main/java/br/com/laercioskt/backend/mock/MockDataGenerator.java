@@ -23,12 +23,12 @@ public class MockDataGenerator {
             "rodrigo", "ronaldo", "roberto",
             "odair", "jessica", "juliana",
             "carlos", "kelli",
-            "fabio", "kaio"};
+            "fabio", "kaio", "jeferson", "luiz","andre", "nicolas"};
     
     private static String[] user2 = new String[]{"junior", "godoy",
-            "depaula", "sila", "bolsonaro",
-            "lucas", "jairo",
-            "nunes", "santos"};
+            "depaula", "silva", "bolsonaro","lucas", "jairo",
+            "nunes", "santos", "ulisses", "santana", "antunes", "pereira","fernandes",
+            "veron","cardoso", "google","objective","actuary"};
 
     private static String[] word1 = new String[]{"The art of", "Mastering",
             "The secrets of", "Avoiding", "For fun and profit: ",
@@ -131,7 +131,7 @@ public class MockDataGenerator {
 
     private static String generateNameUser() {
         return user1[random.nextInt(user1.length)] + "."
-                + word2[random.nextInt(user2.length)];
+                + user2[random.nextInt(user2.length)];
     }
 
 }
