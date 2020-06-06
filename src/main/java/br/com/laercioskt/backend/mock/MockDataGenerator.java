@@ -3,6 +3,7 @@ package br.com.laercioskt.backend.mock;
 import br.com.laercioskt.backend.data.Availability;
 import br.com.laercioskt.backend.data.Category;
 import br.com.laercioskt.backend.data.Product;
+import br.com.laercioskt.backend.data.User;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -10,6 +11,8 @@ import java.util.*;
 public class MockDataGenerator {
     private static int nextCategoryId = 1;
     private static int nextProductId = 1;
+    private static int nextUserId = 1;
+    
     private static final Random random = new Random(1);
     private static final String categoryNames[] = new String[]{
             "Children's books", "Best sellers", "Romance", "Mystery",
@@ -52,6 +55,17 @@ public class MockDataGenerator {
 
         return products;
     }
+    
+    
+    static List<User> createUsers(List<Category> categories) {
+        List<User> users = new ArrayList<User>();
+        for (int i = 0; i < 100; i++) {
+            User u = createUser(categories);
+            users.add(u);
+        }
+
+        return users;
+    }
 
     private static Category createCategory(String name) {
         Category c = new Category();
@@ -74,6 +88,22 @@ public class MockDataGenerator {
 
         p.setCategory(getCategory(categories, 1, 2));
         return p;
+    }    
+    
+    private static User createUser(List<Category> categories) {
+        User u = new User();
+        u.setId(nextProductId++);
+        u.setUserName(generateName());
+
+        u.setPrice(new BigDecimal((random.nextInt(250) + 50) / 10.0));
+        u.setAvailability(Availability.values()[random.nextInt(Availability
+                .values().length)]);
+        if (u.getAvailability() == Availability.AVAILABLE) {
+            u.setStockCount(random.nextInt(523));
+        }
+
+        u.setCategory(getCategory(categories, 1, 2));
+        return u;
     }
 
     private static Set<Category> getCategory(List<Category> categories,

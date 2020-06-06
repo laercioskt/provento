@@ -4,6 +4,7 @@ import br.com.laercioskt.authentication.AccessControl;
 import br.com.laercioskt.authentication.AccessControlFactory;
 import br.com.laercioskt.views.about.AboutView;
 import br.com.laercioskt.views.inventory.InventoryView;
+import br.com.laercioskt.views.users.UserView;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
@@ -26,6 +27,7 @@ import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
+
 
 /**
  * The main layout. Contains the navigation menu.
@@ -68,6 +70,10 @@ public class MainLayout extends AppLayout implements RouterLayout {
                 VaadinIcon.EDIT.create()));
 
         addToDrawer(createMenuLink(AboutView.class, AboutView.VIEW_NAME,
+                VaadinIcon.INFO_CIRCLE.create()));
+        
+
+        addToDrawer(createMenuLink(UserView.class,UserView.VIEW_NAME,
                 VaadinIcon.INFO_CIRCLE.create()));
 
         // Create logout button but don't add it yet; admin view might be added

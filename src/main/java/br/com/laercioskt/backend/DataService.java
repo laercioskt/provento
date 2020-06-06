@@ -2,6 +2,7 @@ package br.com.laercioskt.backend;
 
 import br.com.laercioskt.backend.data.Category;
 import br.com.laercioskt.backend.data.Product;
+import br.com.laercioskt.backend.data.User;
 import br.com.laercioskt.backend.mock.MockDataService;
 
 import java.io.Serializable;
@@ -25,6 +26,14 @@ public abstract class DataService implements Serializable {
     public abstract void updateCategory(Category category);
 
     public abstract void deleteCategory(int categoryId);
+    
+    public abstract void updateUser(User u);
+
+    public abstract void deleteUser(int userId);
+
+    public abstract User getUserById(int userId);
+
+    public abstract Collection<User> getAllUsers();
 
     public static DataService get() {
         return MockDataService.getInstance();

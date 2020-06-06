@@ -56,6 +56,7 @@ public class MainView extends AppLayout {
         tabs.add(createTab("Master Detail", MasterDetailView.class));
         tabs.add(createTab("Empty", EmptyView.class));
         tabs.add(createTab("Form", FormView.class));
+        
         return tabs.toArray(new Tab[tabs.size()]);
     }
 
