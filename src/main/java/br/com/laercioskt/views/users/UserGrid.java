@@ -4,7 +4,6 @@ import br.com.laercioskt.backend.data.Category;
 import br.com.laercioskt.backend.data.User;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.data.renderer.TemplateRenderer;
 
@@ -31,32 +30,24 @@ public class UserGrid extends Grid<User> {
         decimalFormat.setMaximumFractionDigits(2);
         decimalFormat.setMinimumFractionDigits(2);
 
-        addColumn(user -> decimalFormat.format(user.getPrice()) + " €")
-                .setHeader("Price").setTextAlign(ColumnTextAlign.END)
-                .setComparator(Comparator.comparing(User::getPrice))
-                .setFlexGrow(3).setKey("price");
+        addColumn(User::getPassword)
+                .setHeader("Password")
+                .setFlexGrow(20)
+                .setSortable(true)
+                .setKey("password");
 
         // Add an traffic light icon in front of availability
         // Three css classes with the same names of three availability values,
         // Available, Coming and Discontinued, are defined in shared-styles.css
         // and are
-        // used here in availabilityTemplate.
-        final String availabilityTemplate = "<iron-icon icon=\"vaadin:circle\" class-name=\"[[item.availability]]\"></iron-icon> [[item.availability]]";
-        addColumn(TemplateRenderer.<User>of(availabilityTemplate)
-                .withProperty("availability",
-                        user -> user.getAvailability().toString()))
-                .setHeader("Availability")
-                .setComparator(Comparator
-                        .comparing(User::getAvailability))
-                .setFlexGrow(5).setKey("availability");
-
-        addColumn(user -> user.getStockCount() == 0 ? "-"
-                : Integer.toString(user.getStockCount()))
-                .setHeader("Stock count")
-                .setTextAlign(ColumnTextAlign.END)
-                .setComparator(
-                        Comparator.comparingInt(User::getStockCount))
-                .setFlexGrow(3).setKey("stock");
+        // used here in statusTemplate.
+        final String statusTemplate = "<iron-icon icon=\"vaadin:circle\" class-name=\"[[item.status]]\"></iron-icon> [[item.status]]";
+        addColumn(TemplateRenderer.<User>of(statusTemplate)
+                .withProperty("status",
+                        user -> user.getStatus().toString()))
+                .setHeader("Status")
+                .setComparator(Comparator.comparing(User::getStatus))
+                .setFlexGrow(5).setKey("status");
 
         // Show all categories the user is in, separated by commas
         addColumn(this::formatCategories).setHeader("Category").setFlexGrow(12)

@@ -1,9 +1,7 @@
 package br.com.laercioskt.backend.mock;
 
-import br.com.laercioskt.backend.data.Availability;
-import br.com.laercioskt.backend.data.Category;
-import br.com.laercioskt.backend.data.Product;
-import br.com.laercioskt.backend.data.User;
+import br.com.laercioskt.backend.data.*;
+import org.apache.tomcat.util.security.MD5Encoder;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -17,6 +15,15 @@ public class MockDataGenerator {
     private static final String categoryNames[] = new String[]{
             "Children's books", "Best sellers", "Romance", "Mystery",
             "Thriller", "Sci-fi", "Non-fiction", "Cookbooks"};
+
+    private static String[] user1 = new String[]{"Birion", "Mastering",
+            "The secrets of", "Avoiding", "For fun and profit: ",
+            "How to fail at", "10 important facts about",
+            "The ultimate guide to", "Book of", "Surviving", "Encyclopedia of",
+            "Very much", "Learning the basics of", "The cheap way to",
+            "Being awesome at", "The life changer:", "Flurat:",
+            "Becoming one with", "Beginners guide to",
+            "The complete visual guide to", "The mother of all references:"};
 
     private static String[] word1 = new String[]{"The art of", "Mastering",
             "The secrets of", "Avoiding", "For fun and profit: ",
@@ -92,16 +99,10 @@ public class MockDataGenerator {
     
     private static User createUser(List<Category> categories) {
         User u = new User();
-        u.setId(nextProductId++);
-        u.setUserName(generateName());
-
-        u.setPrice(new BigDecimal((random.nextInt(250) + 50) / 10.0));
-        u.setAvailability(Availability.values()[random.nextInt(Availability
-                .values().length)]);
-        if (u.getAvailability() == Availability.AVAILABLE) {
-            u.setStockCount(random.nextInt(523));
-        }
-
+        u.setId(nextUserId++);
+        u.setUserName(generateNameUser());
+        u.setStatus(UserStatus.values()[random.nextInt(UserStatus.values().length)]);
+        u.setPassword("senha");
         u.setCategory(getCategory(categories, 1, 2));
         return u;
     }
@@ -120,6 +121,11 @@ public class MockDataGenerator {
 
     private static String generateName() {
         return word1[random.nextInt(word1.length)] + " "
+                + word2[random.nextInt(word2.length)];
+    }
+
+    private static String generateNameUser() {
+        return user1[random.nextInt(user1.length)] + " "
                 + word2[random.nextInt(word2.length)];
     }
 

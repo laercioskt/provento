@@ -7,13 +7,6 @@ import com.vaadin.flow.data.provider.ListDataProvider;
 import java.util.Locale;
 import java.util.Objects;
 
-/**
- * Utility class that encapsulates filtering and CRUD operations for
- * {@link User} entities.
- * <p>
- * Used to simplify the code in {@link SampleCrudView} and
- * {@link SampleCrudLogic}.
- */
 public class UserDataProvider extends ListDataProvider<User> {
 
     /** Text filter that can be changed separately. */
@@ -67,7 +60,7 @@ public class UserDataProvider extends ListDataProvider<User> {
         this.filterText = filterText.trim().toLowerCase(Locale.ENGLISH);
 
         setFilter(user -> passesFilter(user.getUserName(), this.filterText)
-                || passesFilter(user.getAvailability(), this.filterText)
+                || passesFilter(user.getStatus(), this.filterText)
                 || passesFilter(user.getCategory(), this.filterText));
     }
 

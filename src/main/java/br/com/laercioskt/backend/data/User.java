@@ -1,10 +1,8 @@
 package br.com.laercioskt.backend.data;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,13 +13,13 @@ public class User implements Serializable {
     @NotNull
     @Size(min = 2, message = "User name must have at least two characters")
     private String userName = "";
-    @Min(0)
-    private BigDecimal price = BigDecimal.ZERO;
-    private Set<Category> category;
-    @Min(value = 0, message = "Can't have negative amount in stock")
-    private int stockCount = 0;
     @NotNull
-    private Availability availability = Availability.COMING;
+    @Size(min = 8, message = "User password must have at least eight characters")
+    private String password = "";
+    @NotNull
+    private UserStatus status = UserStatus.ACTIVE;
+
+    private Set<Category> category;
 
     public int getId() {
         return id;
@@ -39,14 +37,6 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     public Set<Category> getCategory() {
         return category;
     }
@@ -55,20 +45,20 @@ public class User implements Serializable {
         this.category = category;
     }
 
-    public int getStockCount() {
-        return stockCount;
+    public UserStatus getStatus() {
+        return status;
     }
 
-    public void setStockCount(int stockCount) {
-        this.stockCount = stockCount;
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
 
-    public Availability getAvailability() {
-        return availability;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAvailability(Availability availability) {
-        this.availability = availability;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public boolean isNewUser() {

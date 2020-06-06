@@ -111,3 +111,11 @@ body {
 .Discontinued {
     color: #f54993;
 }
+
+.Active {
+    color: green;
+}
+
+.Inactive {
+    color: red;
+}

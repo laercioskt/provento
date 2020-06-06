@@ -133,10 +133,6 @@ public class UserForm extends Div {
         content.add(category);
 
         binder = new BeanValidationBinder<>(User.class);
-        binder.forField(price).withConverter(new PriceConverter())
-                .bind("price");
-        binder.forField(stockCount).withConverter(new StockCountConverter())
-                .bind("stockCount");
         binder.bindInstanceFields(this);
 
         // enable/disable save button while editing
