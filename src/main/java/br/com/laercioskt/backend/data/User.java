@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Table(name = "USERS")
 public class User implements Serializable {
 
     @Id
