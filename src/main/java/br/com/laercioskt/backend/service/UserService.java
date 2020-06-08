@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
@@ -39,8 +40,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void deleteUser(int id) {
-        userRepository.deleteById((long) id);
+    public void deleteUser(long id) {
+        userRepository.deleteById(id);
     }
 
     public Collection<Category> getAllCategories() {
@@ -59,5 +60,9 @@ public class UserService {
         category.setId(i);
         category.setName("Name " + i);
         return categoryRepository.save(category);
+    }
+
+    public Optional<User> getUserById(int userId) {
+        return userRepository.findById((long) userId);
     }
 }

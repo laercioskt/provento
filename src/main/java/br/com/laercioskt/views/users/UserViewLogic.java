@@ -4,9 +4,12 @@ import br.com.laercioskt.authentication.AccessControl;
 import br.com.laercioskt.authentication.AccessControlFactory;
 import br.com.laercioskt.backend.DataService;
 import br.com.laercioskt.backend.data.User;
+import br.com.laercioskt.backend.service.UserService;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.notification.Notification;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * This class provides an interface for the logical operations between the CRUD
@@ -20,9 +23,11 @@ import java.io.Serializable;
 public class UserViewLogic implements Serializable {
 
     private final UserView view;
+    private final UserService userService;
 
-    public UserViewLogic(UserView simpleCrudView) {
+    public UserViewLogic(UserView simpleCrudView, UserService userService) {
         view = simpleCrudView;
+        this.userService = userService;
     }
 
     /**
@@ -75,8 +80,14 @@ public class UserViewLogic implements Serializable {
                 // login
                 try {
                     final int pid = Integer.parseInt(userId);
-                    final User user = findUser(pid);
-                    view.selectRow(user);
+                    final Optional<User> user = findUser(pid);
+                    if (user.isPresent())
+                        view.selectRow(user.get());
+                    else {
+                        Notification.show("Usuário não cadastrado");
+                        view.showForm(false);
+                    }
+
                 } catch (final NumberFormatException e) {
                 }
             }
@@ -85,8 +96,8 @@ public class UserViewLogic implements Serializable {
         }
     }
 
-    private User findUser(int userId) {
-        return DataService.get().getUserById(userId);
+    private Optional<User> findUser(int userId) {
+        return userService.getUserById(userId);
     }
 
     public void saveUser(User user) {

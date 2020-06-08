@@ -7,13 +7,6 @@ import com.vaadin.flow.data.provider.ListDataProvider;
 import java.util.Locale;
 import java.util.Objects;
 
-/**
- * Utility class that encapsulates filtering and CRUD operations for
- * {@link Product} entities.
- * <p>
- * Used to simplify the code in {@link SampleCrudView} and
- * {@link SampleCrudLogic}.
- */
 public class ProductDataProvider extends ListDataProvider<Product> {
 
     /** Text filter that can be changed separately. */
@@ -76,7 +69,7 @@ public class ProductDataProvider extends ListDataProvider<Product> {
         Objects.requireNonNull(product,
                 "Cannot provide an id for a null product.");
 
-        return product.getId();
+        return Math.toIntExact(product.getId());
     }
 
     private boolean passesFilter(Object object, String filterText) {

@@ -74,7 +74,7 @@ public class UserDataProvider extends CallbackDataProvider<User, UserFilter> {
         Objects.requireNonNull(user,
                 "Cannot provide an id for a null user.");
 
-        return user.getId();
+        return Math.toIntExact(user.getId());
     }
 
     private boolean passesFilter(Object object, String filterText) {

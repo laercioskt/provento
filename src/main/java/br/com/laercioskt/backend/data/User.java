@@ -15,7 +15,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    private int id = -1;
+    private long id = -1;
     @NotNull
     @Size(min = 2, message = "User name must have at least two characters")
     private String userName = "";
@@ -29,7 +29,7 @@ public class User implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Category> category = new HashSet<>();
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

@@ -15,11 +15,11 @@ public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    private int id = -1;
+    private long id = -1;
     @Size(min = 2, message = "Category name must be at least two characters")
     private String name;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

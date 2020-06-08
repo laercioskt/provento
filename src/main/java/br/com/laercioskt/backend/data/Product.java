@@ -11,7 +11,7 @@ import java.util.Set;
 public class Product implements Serializable {
 
     @NotNull
-    private int id = -1;
+    private long id = -1;
     @NotNull
     @Size(min = 2, message = "Product name must have at least two characters")
     private String productName = "";
@@ -23,7 +23,7 @@ public class Product implements Serializable {
     @NotNull
     private Availability availability = Availability.COMING;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

@@ -19,22 +19,14 @@ public abstract class DataService implements Serializable {
 
     public abstract void updateProduct(Product p);
 
-    public abstract void deleteProduct(int productId);
+    public abstract void deleteProduct(long productId);
 
-    public abstract Product getProductById(int productId);
+    public abstract Product getProductById(long productId);
 
     public abstract void updateCategory(Category category);
 
-    public abstract void deleteCategory(int categoryId);
+    public abstract void deleteCategory(long categoryId);
     
-    public abstract void updateUser(User u);
-
-    public abstract void deleteUser(int userId);
-
-    public abstract User getUserById(int userId);
-
-    public abstract Collection<User> getAllUsers();
-
     public static DataService get() {
         return MockDataService.getInstance();
     }

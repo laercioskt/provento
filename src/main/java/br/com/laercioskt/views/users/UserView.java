@@ -30,7 +30,7 @@ public class UserView extends HorizontalLayout implements HasUrlParameter<String
 
     private TextField filter;
 
-    private final UserViewLogic viewLogic = new UserViewLogic(this);
+    private final UserViewLogic viewLogic;
 
     private Button newUser;
 
@@ -45,6 +45,7 @@ public class UserView extends HorizontalLayout implements HasUrlParameter<String
                 query -> userService.findAll(query.getOffset(), query.getLimit(), filter.getValue()).stream(),
                 query -> (int) userService.count());
         grid.setDataProvider(dataProvider);
+        viewLogic = new UserViewLogic(this, userService);
         // Allows user to select a single row in the grid.
         grid.asSingleSelect().addValueChangeListener(
                 event -> viewLogic.rowSelected(event.getValue()));

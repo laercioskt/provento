@@ -78,6 +78,7 @@ body {
     overflow: auto;
     background: var(--lumo-base-color);
     box-shadow: var(--overlay-box-shadow);
+    width: 40%;
 }
 
 .user-form-content {
