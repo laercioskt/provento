@@ -165,6 +165,9 @@
                 <configuration>
                     <wait>500</wait>
                     <maxAttempts>240</maxAttempts>
+                    <jvmArguments>
+                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005
+                    </jvmArguments>
                 </configuration>
             </plugin>
 

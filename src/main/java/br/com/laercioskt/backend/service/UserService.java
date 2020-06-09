@@ -5,7 +5,6 @@ import br.com.laercioskt.backend.data.User;
 import br.com.laercioskt.backend.repository.CategoryRepository;
 import br.com.laercioskt.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -14,6 +13,7 @@ import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
+import static org.springframework.data.domain.PageRequest.of;
 
 @Service
 public class UserService {
@@ -29,7 +29,7 @@ public class UserService {
     }
 
     public List<User> findAll(int offset, int limit, String filterText) {
-        return userRepository.findAll(PageRequest.of(offset, limit)).toList();
+        return userRepository.findByFilter(filterText, of(offset, limit));
     }
 
     public long count() {
@@ -65,4 +65,9 @@ public class UserService {
     public Optional<User> getUserById(int userId) {
         return userRepository.findById((long) userId);
     }
+
+    public long count(String filterText) {
+        return userRepository.count(filterText);
+    }
+
 }

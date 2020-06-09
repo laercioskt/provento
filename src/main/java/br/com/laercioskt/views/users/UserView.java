@@ -43,7 +43,7 @@ public class UserView extends HorizontalLayout implements HasUrlParameter<String
         grid = new UserGrid();
         dataProvider = new UserDataProvider(userService,
                 query -> userService.findAll(query.getOffset(), query.getLimit(), filter.getValue()).stream(),
-                query -> (int) userService.count());
+                query -> (int) userService.count(filter.getValue()));
         grid.setDataProvider(dataProvider);
         viewLogic = new UserViewLogic(this, userService);
         // Allows user to select a single row in the grid.
@@ -67,7 +67,7 @@ public class UserView extends HorizontalLayout implements HasUrlParameter<String
 
     public HorizontalLayout createTopBar() {
         filter = new TextField();
-        filter.setPlaceholder("Filter name, availability or category");
+        filter.setPlaceholder("Filter name, status or category");
         // Apply the filter to grid's data provider. TextField value is never
         filter.addValueChangeListener(
                 event -> dataProvider.refreshAll());
