@@ -25,8 +25,7 @@ public class User implements Serializable {
     @NotNull
     private UserStatus status = UserStatus.ACTIVE;
 
-    //@ElementCollection(fetch = FetchType.EAGER)
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Category> category = new HashSet<>();
 
     public long getId() {

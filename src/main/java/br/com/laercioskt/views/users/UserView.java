@@ -1,8 +1,6 @@
 package br.com.laercioskt.views.users;
 
-import br.com.laercioskt.backend.DataService;
 import br.com.laercioskt.backend.data.User;
-import br.com.laercioskt.backend.mock.MockDataService;
 import br.com.laercioskt.backend.service.UserService;
 import br.com.laercioskt.views.MainLayout;
 import com.vaadin.flow.component.Key;
@@ -15,10 +13,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.*;
-import org.atmosphere.config.service.Post;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.annotation.PostConstruct;
 
 @Route(value = "Users", layout = MainLayout.class)
 public class UserView extends HorizontalLayout implements HasUrlParameter<String> {
@@ -42,7 +37,7 @@ public class UserView extends HorizontalLayout implements HasUrlParameter<String
         final HorizontalLayout topLayout = createTopBar();
         grid = new UserGrid();
         dataProvider = new UserDataProvider(userService,
-                query -> userService.findAll(query.getOffset(), query.getLimit(), filter.getValue()).stream(),
+                query -> userService.findWithCategories(query.getOffset(), query.getLimit(), filter.getValue()).stream(),
                 query -> (int) userService.count(filter.getValue()));
         grid.setDataProvider(dataProvider);
         viewLogic = new UserViewLogic(this, userService);

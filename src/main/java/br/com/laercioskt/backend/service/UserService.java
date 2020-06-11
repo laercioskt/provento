@@ -28,8 +28,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public List<User> findAll(int offset, int limit, String filterText) {
-        return userRepository.findByFilter(filterText, of(offset, limit));
+    public List<User> findWithCategories(int offset, int limit, String filterText) {
+        return userRepository.findWithCategories(filterText, of(offset, limit));
     }
 
     public long count() {
