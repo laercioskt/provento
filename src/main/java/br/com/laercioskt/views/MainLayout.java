@@ -3,6 +3,7 @@ package br.com.laercioskt.views;
 import br.com.laercioskt.authentication.AccessControl;
 import br.com.laercioskt.authentication.AccessControlFactory;
 import br.com.laercioskt.views.about.AboutView;
+import br.com.laercioskt.views.category.CategoryView;
 import br.com.laercioskt.views.inventory.InventoryView;
 import br.com.laercioskt.views.users.UserView;
 import com.vaadin.flow.component.AttachEvent;
@@ -74,6 +75,10 @@ public class MainLayout extends AppLayout implements RouterLayout {
 
         addToDrawer(createMenuLink(UserView.class,UserView.VIEW_NAME,
                 VaadinIcon.USER.create()));
+        
+
+        addToDrawer(createMenuLink( CategoryView.class,CategoryView.VIEW_NAME,
+                VaadinIcon.PENCIL.create()));
 
         // Create logout button but don't add it yet; admin view might be added
         // in between (see #onAttach())

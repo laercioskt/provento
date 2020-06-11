@@ -4,7 +4,9 @@ import br.com.laercioskt.backend.data.Category;
 
 import java.util.List;
 
-public interface CategoryRepository extends BaseRepository<Category, Long> {
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+public interface CategoryRepository extends PagingAndSortingRepository<Category, Long> {
 
     @Override
     List<Category> findAll();
