@@ -1,15 +1,18 @@
 package br.com.laercioskt.backend.repository;
 
-import br.com.laercioskt.backend.data.User;
-import br.com.laercioskt.backend.data.UserStatus;
+import br.com.laercioskt.backend.data.*;
 import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
+import static javax.persistence.criteria.JoinType.LEFT;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 public class UserRepositoryCustomImpl implements UserRepositoryCustom {
 
@@ -18,14 +21,14 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
 
     @Override
     public List<User> findWithCategories(String filterText, Pageable pageable) {
-        String where = buildWhere(filterText);
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<User> query = cb.createQuery(User.class);
+        Root<User> from = query.from(User.class);
+        SetJoin<User, Category> join = from.join(User_.category, LEFT);
+        from.fetch(User_.category);
+        query.where(restrictions(filterText, cb, from, join));
 
-        String select = "SELECT distinct u FROM User u JOIN FETCH u.category c where " + where;
-        List<UserStatus> statuses = getUserStatuses(filterText);
-
-        return entityManager.createQuery(select, User.class)
-                .setParameter("filterText", "%" + filterText + "%")
-                .setParameter("status", statuses.isEmpty() ? "1" : statuses)
+        return entityManager.createQuery(query)
                 .setFirstResult(pageable.getPageNumber())
                 .setMaxResults(pageable.getPageSize())
                 .getResultList();
@@ -33,28 +36,36 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
 
     @Override
     public long count(String filterText) {
-        String where = buildWhere(filterText);
-        String query = "SELECT count(distinct u) FROM User u, IN (u.category) c where " + where;
-        List<UserStatus> statuses = getUserStatuses(filterText);
-        return entityManager.createQuery(query, Long.class)
-                .setParameter("filterText", "%" + filterText + "%")
-                .setParameter("status", statuses.isEmpty() ? "1" : statuses)
-                .getSingleResult();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> query = cb.createQuery(Long.class);
+        Root<User> from = query.from(User.class);
+        SetJoin<User, Category> join = from.join(User_.category, LEFT);
+        query.select(cb.countDistinct(from)).where(restrictions(filterText, cb, from, join));
+
+        return entityManager.createQuery(query).getSingleResult();
     }
 
-    private List<UserStatus> getUserStatuses(String filterText) {
-        return stream(UserStatus.values())
-                .filter(s -> s.toString().contains(filterText))
-                .collect(toList());
+    private Predicate[] restrictions(String filterText, CriteriaBuilder cb, Root<User> from, SetJoin<User, Category> join) {
+        List<Predicate> restrictions = new ArrayList<>();
+
+        if (isNotEmpty(filterText)) {
+            restrictions.add(cb.or(
+                    cb.like(cb.upper(from.get(User_.userName)), "%" + filterText.toUpperCase() + "%"),
+                    cb.like(cb.upper(join.get(Category_.name)), "%" + filterText.toUpperCase() + "%"),
+                    getStatusClause(filterText, cb, from)
+            ));
+        }
+
+        return restrictions.toArray(new Predicate[]{});
     }
 
-    private String buildWhere(String filterText) {
-        String statusCondition = getUserStatuses(filterText).isEmpty() ? " OR :status != :status " : " OR u.status in :status";
+    private Predicate getStatusClause(String filterText, CriteriaBuilder cb, Root<User> from) {
+        List<UserStatus> statuses = statuses(filterText);
+        return statuses.isEmpty() ? cb.or() : from.get(User_.status).in(statuses);
+    }
 
-        return (filterText.isEmpty() ? " 1 = 1 " : " 1 != 1 ")
-                + " OR u.userName like :filterText"
-                + " OR c.name like :filterText"
-                + statusCondition;
+    private List<UserStatus> statuses(String filterText) {
+        return stream(UserStatus.values()).filter(s -> s.toString().contains(filterText)).collect(toList());
     }
 
 }
