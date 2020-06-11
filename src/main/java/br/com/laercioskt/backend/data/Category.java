@@ -40,6 +40,10 @@ public class Category implements Serializable {
         return getName();
     }
 
+    
+    public boolean isNewCAtegory() {
+        return getId() == -1;
+    }
     /*
      * Vaadin DataProviders rely on properly implemented equals and hashcode
      * methods.
@@ -81,5 +85,9 @@ public class Category implements Serializable {
     }
 
 //    new CategoryBuilder().withName("Category " + i).build()
+    
+    public class CategoryFilter{
+    	
+    }
 
 }
