@@ -25,7 +25,8 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
         CriteriaQuery<User> query = cb.createQuery(User.class);
         Root<User> from = query.from(User.class);
         SetJoin<User, Category> join = from.join(User_.category, LEFT);
-        from.fetch(User_.category);
+        from.fetch(User_.category, LEFT);
+        query.distinct(true);
         query.where(restrictions(filterText, cb, from, join));
 
         return entityManager.createQuery(query)
@@ -65,7 +66,8 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
     }
 
     private List<UserStatus> statuses(String filterText) {
-        return stream(UserStatus.values()).filter(s -> s.toString().contains(filterText)).collect(toList());
+        return stream(UserStatus.values())
+                .filter(s -> s.toString().toUpperCase().contains(filterText.toUpperCase())).collect(toList());
     }
 
 }
