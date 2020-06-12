@@ -8,12 +8,12 @@ import br.com.laercioskt.backend.data.UserStatus
 import br.com.laercioskt.backend.data.UserStatus.ACTIVE
 import br.com.laercioskt.backend.data.UserStatus.INACTIVE
 import org.amshove.kluent.`should be equal to`
+import org.junit.Before
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
-import kotlin.test.BeforeTest
-import kotlin.test.Test
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(classes = [ApplicationConfigTest::class])
@@ -25,7 +25,7 @@ internal class UserRepositoryCustomImplTest {
     @Autowired
     private lateinit var categoryRepository: CategoryRepository
 
-    @BeforeTest
+    @Before
     fun setup() {
         val admin = createCategory("admin")
         val users = createCategory("users")
