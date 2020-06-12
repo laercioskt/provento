@@ -44,6 +44,8 @@ internal class UserRepositoryCustomImplTest {
         userRepository.count("4").`should be equal to`(2)
         userRepository.count("12345").`should be equal to`(1)
         userRepository.count("6").`should be equal to`(0)
+
+        userRepository.count("TIVE").`should be equal to`(5)
     }
 
     private fun createCategory(name: String) =
