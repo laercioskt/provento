@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserRepositoryCustom {
 
-    List<User> findWithCategories(String filterText, Pageable pageable);
+    List<User> findWithCategories(String filterText, Pageable pageable, List<UserOrder> sortOrders);
 
     long count(String filterText);
 }

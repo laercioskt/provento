@@ -3,7 +3,9 @@ package br.com.laercioskt.backend.service;
 import br.com.laercioskt.backend.data.Category;
 import br.com.laercioskt.backend.data.User;
 import br.com.laercioskt.backend.repository.CategoryRepository;
+import br.com.laercioskt.backend.repository.UserOrder;
 import br.com.laercioskt.backend.repository.UserRepository;
+import com.vaadin.flow.data.provider.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import static com.vaadin.flow.data.provider.SortDirection.ASCENDING;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 import static org.springframework.data.domain.PageRequest.of;
@@ -24,12 +27,10 @@ public class UserService {
     @Autowired
     CategoryRepository categoryRepository;
 
-    public Iterable<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    public List<User> findWithCategories(int offset, int limit, String filterText) {
-        return userRepository.findWithCategories(filterText, of(offset, limit));
+    public List<User> findWithCategories(Query<User, Void> query, String filterText) {
+        List<UserOrder> sortOrders = query.getSortOrders().stream()
+                .map(s -> new UserOrder(s.getSorted(), s.getDirection().equals(ASCENDING))).collect(toList());
+        return userRepository.findWithCategories(filterText, of(query.getOffset(), query.getLimit()), sortOrders);
     }
 
     public long count() {

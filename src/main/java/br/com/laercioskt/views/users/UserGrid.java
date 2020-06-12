@@ -11,6 +11,8 @@ import java.text.DecimalFormat;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
+import static br.com.laercioskt.backend.data.User_.*;
+
 public class UserGrid extends Grid<User> {
 
     public UserGrid() {
@@ -18,9 +20,9 @@ public class UserGrid extends Grid<User> {
         setSizeFull();
 
         addColumn(User::getUserName).setHeader("User name")
-                .setFlexGrow(20).setSortable(true).setKey("username");
+                .setFlexGrow(20).setSortable(true)
+                .setKey(USER_NAME);
 
-        // Format and add " €" to price
         final DecimalFormat decimalFormat = new DecimalFormat();
         decimalFormat.setMaximumFractionDigits(2);
         decimalFormat.setMinimumFractionDigits(2);
@@ -29,13 +31,8 @@ public class UserGrid extends Grid<User> {
                 .setHeader("Password")
                 .setFlexGrow(20)
                 .setSortable(true)
-                .setKey("password");
+                .setKey(PASSWORD);
 
-        // Add an traffic light icon in front of availability
-        // Three css classes with the same names of three availability values,
-        // Available, Coming and Discontinued, are defined in shared-styles.css
-        // and are
-        // used here in statusTemplate.
         final String statusTemplate = "<iron-icon icon=\"vaadin:circle\" class-name=\"[[item.status]]\"></iron-icon> [[item.status]]";
         addColumn(TemplateRenderer.<User>of(statusTemplate)
                 .withProperty("status",
@@ -44,33 +41,29 @@ public class UserGrid extends Grid<User> {
                 .setComparator(Comparator.comparing(User::getStatus))
                 .setFlexGrow(5).setKey("status");
 
-        // Show all categories the user is in, separated by commas
         addColumn(this::formatCategories).setHeader("Category").setFlexGrow(12)
-                .setKey("category");
+                .setKey(CATEGORY);
 
-        // If the browser window size changes, check if all columns fit on
-        // screen
-        // (e.g. switching from portrait to landscape mode)
         UI.getCurrent().getPage().addBrowserWindowResizeListener(
                 e -> setColumnVisibility(e.getWidth()));
     }
 
     private void setColumnVisibility(int width) {
         if (width > 800) {
-            getColumnByKey("username").setVisible(true);
-            getColumnByKey("password").setVisible(true);
-            getColumnByKey("status").setVisible(true);
-            getColumnByKey("category").setVisible(true);
+            getColumnByKey(USER_NAME).setVisible(true);
+            getColumnByKey(PASSWORD).setVisible(true);
+            getColumnByKey(STATUS).setVisible(true);
+            getColumnByKey(CATEGORY).setVisible(true);
         } else if (width > 550) {
-            getColumnByKey("username").setVisible(true);
-            getColumnByKey("password").setVisible(true);
-            getColumnByKey("status").setVisible(false);
-            getColumnByKey("category").setVisible(true);
+            getColumnByKey(USER_NAME).setVisible(true);
+            getColumnByKey(PASSWORD).setVisible(true);
+            getColumnByKey(STATUS).setVisible(false);
+            getColumnByKey(CATEGORY).setVisible(true);
         } else {
-            getColumnByKey("username").setVisible(true);
-            getColumnByKey("password").setVisible(true);
-            getColumnByKey("status").setVisible(false);
-            getColumnByKey("category").setVisible(false);
+            getColumnByKey(USER_NAME).setVisible(true);
+            getColumnByKey(PASSWORD).setVisible(true);
+            getColumnByKey(STATUS).setVisible(false);
+            getColumnByKey(CATEGORY).setVisible(false);
         }
     }
 
@@ -80,9 +73,7 @@ public class UserGrid extends Grid<User> {
 
         // fetch browser width
         UI.getCurrent().getInternals().setExtendedClientDetails(null);
-        UI.getCurrent().getPage().retrieveExtendedClientDetails(e -> {
-            setColumnVisibility(e.getBodyClientWidth());
-        });
+        UI.getCurrent().getPage().retrieveExtendedClientDetails(e -> setColumnVisibility(e.getBodyClientWidth()));
     }
 
     public User getSelectedRow() {

@@ -20,19 +20,25 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
     private EntityManager entityManager;
 
     @Override
-    public List<User> findWithCategories(String filterText, Pageable pageable) {
+    public List<User> findWithCategories(String filterText, Pageable pageable, List<UserOrder> sortOrders) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> query = cb.createQuery(User.class);
         Root<User> from = query.from(User.class);
         SetJoin<User, Category> join = from.join(User_.category, LEFT);
         from.fetch(User_.category, LEFT);
-        query.distinct(true);
-        query.where(restrictions(filterText, cb, from, join));
+        query.where(restrictions(filterText, cb, from, join))
+                .orderBy(getSortOrders(sortOrders, cb, from));
 
         return entityManager.createQuery(query)
                 .setFirstResult(pageable.getPageNumber())
                 .setMaxResults(pageable.getPageSize())
                 .getResultList();
+    }
+
+    private List<Order> getSortOrders(List<UserOrder> sortOrders, CriteriaBuilder cb, Root<User> from) {
+        return sortOrders.stream()
+                .map(s -> s.isAscending() ? cb.asc(from.get(s.getSorted())) : cb.desc(from.get(s.getSorted())))
+                .collect(toList());
     }
 
     @Override

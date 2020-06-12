@@ -37,7 +37,7 @@ public class UserView extends HorizontalLayout implements HasUrlParameter<String
         final HorizontalLayout topLayout = createTopBar();
         grid = new UserGrid();
         dataProvider = new UserDataProvider(userService,
-                query -> userService.findWithCategories(query.getOffset(), query.getLimit(), filter.getValue()).stream(),
+                query -> userService.findWithCategories(query, filter.getValue()).stream(),
                 query -> (int) userService.count(filter.getValue()));
         grid.setDataProvider(dataProvider);
         viewLogic = new UserViewLogic(this, userService);
@@ -90,21 +90,10 @@ public class UserView extends HorizontalLayout implements HasUrlParameter<String
         Notification.show(msg);
     }
 
-    /**
-     * Shows a temporary popup notification to the user.
-     *
-     * @param msg
-     * @see Notification#show(String)
-     */
     public void showNotification(String msg) {
         Notification.show(msg);
     }
 
-    /**
-     * Enables/Disables the new user button.
-     *
-     * @param enabled
-     */
     public void setNewUserEnabled(boolean enabled) {
         newUser.setEnabled(enabled);
     }
@@ -116,48 +105,23 @@ public class UserView extends HorizontalLayout implements HasUrlParameter<String
         grid.getSelectionModel().deselectAll();
     }
 
-    /**
-     * Selects a row
-     *
-     * @param row
-     */
     public void selectRow(User row) {
         grid.getSelectionModel().select(row);
     }
 
-    /**
-     * Updates a user in the list of users.
-     *
-     * @param user
-     */
     public void updateUser(User user) {
         dataProvider.save(user);
     }
 
-    /**
-     * Removes a user from the list of users.
-     *
-     * @param user
-     */
     public void removeUser(User user) {
         dataProvider.delete(user);
     }
 
-    /**
-     * Displays user a form to edit a User.
-     *
-     * @param user
-     */
     public void editUser(User user) {
         showForm(user != null);
         form.editUser(user);
     }
 
-    /**
-     * Shows and hides the new user form
-     *
-     * @param show
-     */
     public void showForm(boolean show) {
         form.setVisible(show);
         form.setEnabled(show);

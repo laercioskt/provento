@@ -2,10 +2,7 @@ package br.com.laercioskt.views.category;
 
 import br.com.laercioskt.backend.data.Category;
 import br.com.laercioskt.backend.data.Category.CategoryFilter;
-import br.com.laercioskt.backend.data.User;
-import br.com.laercioskt.backend.data.User.UserFilter;
 import br.com.laercioskt.backend.service.CategoryService;
-import br.com.laercioskt.backend.service.UserService;
 import com.vaadin.flow.data.provider.CallbackDataProvider;
 
 import java.util.Locale;
@@ -24,12 +21,6 @@ public class CategoryDataProvider extends CallbackDataProvider<Category, Categor
         this.service = service;
     }
 
-    /**
-     * Store given user to the backing data service.
-     *
-     * @param user
-     *            the updated or new user
-     */
     public void save(Category category) {
         final boolean newCategory = category.isNewCAtegory();
 
@@ -41,12 +32,6 @@ public class CategoryDataProvider extends CallbackDataProvider<Category, Categor
         }
     }
 
-    /**
-     * Delete given user from the backing data service.
-     *
-     * @param user
-     *            the user to be deleted
-     */
     public void delete(Category category) {
         service.deleteCategory(category.getId());
         refreshAll();
