@@ -72,10 +72,6 @@ public class User implements Serializable {
         return getId() == -1;
     }
 
-    /*
-     * Vaadin DataProviders rely on properly implemented equals and hashcode
-     * methods.
-     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null || id == -1) {
@@ -95,5 +91,46 @@ public class User implements Serializable {
 
         return Objects.hash(id);
     }
+
+    public static class UserBuilder {
+
+        private String userName;
+        private String password;
+        private UserStatus status = UserStatus.ACTIVE;
+        private final Set<Category> categories = new HashSet<>();
+
+        public UserBuilder() {
+        }
+
+        public UserBuilder withUserName(String userName) {
+            this.userName = userName;
+            return this;
+        }
+
+        public UserBuilder withPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public UserBuilder withStatus(UserStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public UserBuilder withCategory(Category category) {
+            this.categories.add(category);
+            return this;
+        }
+
+        public User build() {
+            User user = new User();
+            user.setUserName(this.userName);
+            user.setPassword(this.password);
+            user.setStatus(this.status);
+            user.setCategory(this.categories);
+            return user;
+        }
+    }
+
 
 }

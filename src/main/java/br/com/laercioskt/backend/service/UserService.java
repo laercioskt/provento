@@ -37,8 +37,8 @@ public class UserService {
         return userRepository.count();
     }
 
-    public void updateUser(User user) {
-        userRepository.save(user);
+    public User createOrUpdateUser(User user) {
+        return userRepository.save(user);
     }
 
     public void deleteUser(long id) {

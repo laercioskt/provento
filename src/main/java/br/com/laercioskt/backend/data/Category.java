@@ -84,10 +84,4 @@ public class Category implements Serializable {
         }
     }
 
-//    new CategoryBuilder().withName("Category " + i).build()
-    
-    public class CategoryFilter{
-    	
-    }
-
 }

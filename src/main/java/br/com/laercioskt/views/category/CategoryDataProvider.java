@@ -1,22 +1,23 @@
 package br.com.laercioskt.views.category;
 
 import br.com.laercioskt.backend.data.Category;
-import br.com.laercioskt.backend.data.Category.CategoryFilter;
 import br.com.laercioskt.backend.service.CategoryService;
 import com.vaadin.flow.data.provider.CallbackDataProvider;
 
 import java.util.Locale;
 import java.util.Objects;
 
-public class CategoryDataProvider extends CallbackDataProvider<Category, CategoryFilter> {
+public class CategoryDataProvider extends CallbackDataProvider<Category, Void> {
 
     private final CategoryService service;
 
-    /** Text filter that can be changed separately. */
+    /**
+     * Text filter that can be changed separately.
+     */
     private String filterText = "";
 
-    public CategoryDataProvider(CategoryService service, FetchCallback<Category, CategoryFilter> fetchCallback,
-                            CountCallback<Category, CategoryFilter> countCallback) {
+    public CategoryDataProvider(CategoryService service, FetchCallback<Category, Void> fetchCallback,
+                                CountCallback<Category, Void> countCallback) {
         super(fetchCallback, countCallback);
         this.service = service;
     }
@@ -42,8 +43,7 @@ public class CategoryDataProvider extends CallbackDataProvider<Category, Categor
      * <p>
      * Filter is compared for user name, availability and category.
      *
-     * @param filterText
-     *            the text to filter by, never null
+     * @param filterText the text to filter by, never null
      */
     public void setFilter(String filterText) {
         Objects.requireNonNull(filterText, "Filter text cannot be null.");
