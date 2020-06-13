@@ -29,11 +29,11 @@ internal class UserRepositoryCustomImplTest {
     fun setup() {
         val admin = createCategory("admin")
         val users = createCategory("users")
-        createUser("user1", "pass1", ACTIVE, admin)
-        createUser("user12", "pass2", INACTIVE, admin)
-        createUser("user123", "pass3", ACTIVE, users)
-        createUser("user1234", "pass4", ACTIVE, users)
-        createUser("user12345", "pass5", INACTIVE, users)
+        createUser("user1", "pass123456789", ACTIVE, admin)
+        createUser("user12", "pass23456789", INACTIVE, admin)
+        createUser("user123", "pass3456789", ACTIVE, users)
+        createUser("user1234", "pass456789", ACTIVE, users)
+        createUser("user12345", "pass56789", INACTIVE, users)
     }
 
     @Test
