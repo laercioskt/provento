@@ -28,7 +28,7 @@ public class UserGrid extends Grid<User> {
         decimalFormat.setMinimumFractionDigits(2);
 
         String iconHtml = """
-                        <iron-icon icon="vaadin:circle" class-name="[[item.status]]"/> [[item.status]]
+                        <iron-icon icon="vaadin:circle" class-name="[[item.status]]"></iron-icon> [[item.status]]
                         """;
         addColumn(TemplateRenderer.<User>of(iconHtml)
                 .withProperty("status", user -> user.getStatus().toString()))
@@ -42,20 +42,13 @@ public class UserGrid extends Grid<User> {
     }
 
     private void setColumnVisibility(int width) {
-        if (width > 800) {
+        if (width > 550) {
             getColumnByKey(USER_NAME).setVisible(true);
-            getColumnByKey(PASSWORD).setVisible(true);
             getColumnByKey(STATUS).setVisible(true);
-            getColumnByKey(CATEGORY).setVisible(true);
-        } else if (width > 550) {
-            getColumnByKey(USER_NAME).setVisible(true);
-            getColumnByKey(PASSWORD).setVisible(true);
-            getColumnByKey(STATUS).setVisible(false);
             getColumnByKey(CATEGORY).setVisible(true);
         } else {
             getColumnByKey(USER_NAME).setVisible(true);
-            getColumnByKey(PASSWORD).setVisible(true);
-            getColumnByKey(STATUS).setVisible(false);
+            getColumnByKey(STATUS).setVisible(true);
             getColumnByKey(CATEGORY).setVisible(false);
         }
     }
