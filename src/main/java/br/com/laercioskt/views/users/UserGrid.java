@@ -27,25 +27,18 @@ public class UserGrid extends Grid<User> {
         decimalFormat.setMaximumFractionDigits(2);
         decimalFormat.setMinimumFractionDigits(2);
 
-        addColumn(User::getPassword)
-                .setHeader("Password")
-                .setFlexGrow(20)
-                .setSortable(true)
-                .setKey(PASSWORD);
-
-        final String statusTemplate = "<iron-icon icon=\"vaadin:circle\" class-name=\"[[item.status]]\"></iron-icon> [[item.status]]";
-        addColumn(TemplateRenderer.<User>of(statusTemplate)
-                .withProperty("status",
-                        user -> user.getStatus().toString()))
+        String iconHtml = """
+                        <iron-icon icon="vaadin:circle" class-name="[[item.status]]"/> [[item.status]]
+                        """;
+        addColumn(TemplateRenderer.<User>of(iconHtml)
+                .withProperty("status", user -> user.getStatus().toString()))
                 .setHeader("Status")
                 .setComparator(Comparator.comparing(User::getStatus))
                 .setFlexGrow(5).setKey("status");
 
-        addColumn(this::formatCategories).setHeader("Category").setFlexGrow(12)
-                .setKey(CATEGORY);
+        addColumn(this::formatCategories).setHeader("Category").setFlexGrow(12).setKey(CATEGORY);
 
-        UI.getCurrent().getPage().addBrowserWindowResizeListener(
-                e -> setColumnVisibility(e.getWidth()));
+        UI.getCurrent().getPage().addBrowserWindowResizeListener(e -> setColumnVisibility(e.getWidth()));
     }
 
     private void setColumnVisibility(int width) {
@@ -76,18 +69,13 @@ public class UserGrid extends Grid<User> {
         UI.getCurrent().getPage().retrieveExtendedClientDetails(e -> setColumnVisibility(e.getBodyClientWidth()));
     }
 
-    public User getSelectedRow() {
-        return asSingleSelect().getValue();
-    }
-
     public void refresh(User user) {
         getDataCommunicator().refresh(user);
     }
 
     private String formatCategories(User user) {
-        if (user.getCategory() == null || user.getCategory().isEmpty()) {
-            return "";
-        }
+        if (user.getCategory().isEmpty()) return "";
+
         return user.getCategory().stream()
                 .sorted(Comparator.comparing(Category::getId))
                 .map(Category::getName).collect(Collectors.joining(", "));
