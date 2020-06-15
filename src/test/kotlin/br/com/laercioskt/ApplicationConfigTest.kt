@@ -3,7 +3,7 @@ package br.com.laercioskt
 import org.springframework.context.annotation.Bean
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType.H2
 import org.springframework.orm.jpa.JpaTransactionManager
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter
@@ -17,7 +17,7 @@ import javax.sql.DataSource
 class ApplicationConfigTest {
 
     @Bean
-    fun dataSource(): DataSource = EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build()
+    fun dataSource(): DataSource = EmbeddedDatabaseBuilder().setType(H2).build()
 
     @Bean
     fun entityManagerFactory(): LocalContainerEntityManagerFactoryBean {

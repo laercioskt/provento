@@ -28,8 +28,9 @@ class ApplicationConfig {
 
         String username = dbUri.getUserInfo().split(":")[0];
         String password = dbUri.getUserInfo().split(":")[1];
-        String dbUrl = format("jdbc:postgresql://%s:%d%s?sslmode=require",
-                dbUri.getHost(), dbUri.getPort(), dbUri.getPath());
+
+        String dbUrl = "jdbc:postgresql://%s:%d%s?sslmode=require"
+                .formatted(dbUri.getHost(), dbUri.getPort(), dbUri.getPath());
 
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setUrl(dbUrl);
