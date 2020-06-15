@@ -1,11 +1,13 @@
 package br.com.laercioskt.backend.repository;
 
 import br.com.laercioskt.backend.data.User;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends PagingAndSortingRepository<User, Long>, UserRepositoryCustom {
+import java.util.Optional;
 
-    User findByUserName(String userName);
+public interface UserRepository extends JpaRepository<User, Long>, UserRepositoryCustom {
+
+    Optional<User> findByUserName(String userName);
 
 }
 

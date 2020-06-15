@@ -3,10 +3,10 @@ package br.com.laercioskt.backend.service;
 import br.com.laercioskt.backend.data.Category;
 import br.com.laercioskt.backend.data.User;
 import br.com.laercioskt.backend.repository.CategoryRepository;
-import br.com.laercioskt.backend.repository.UserOrder;
 import br.com.laercioskt.backend.repository.UserRepository;
 import com.vaadin.flow.data.provider.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -17,6 +17,8 @@ import static com.vaadin.flow.data.provider.SortDirection.ASCENDING;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 import static org.springframework.data.domain.PageRequest.of;
+import static org.springframework.data.domain.Sort.Direction.ASC;
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Service
 public class UserService {
@@ -28,8 +30,8 @@ public class UserService {
     CategoryRepository categoryRepository;
 
     public List<User> findWithCategories(Query<User, Void> query, String filterText) {
-        List<UserOrder> sortOrders = query.getSortOrders().stream()
-                .map(s -> new UserOrder(s.getSorted(), s.getDirection().equals(ASCENDING))).collect(toList());
+        List<Order> sortOrders = query.getSortOrders().stream()
+                .map(s -> new Order(s.getDirection().equals(ASCENDING) ? ASC : DESC, s.getSorted())).collect(toList());
         return userRepository.findWithCategories(filterText, of(query.getOffset(), query.getLimit()), sortOrders);
     }
 

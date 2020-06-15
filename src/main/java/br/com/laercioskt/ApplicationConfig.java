@@ -15,6 +15,8 @@ import javax.sql.DataSource;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import static java.lang.String.format;
+
 @Configuration
 @EnableJpaRepositories(basePackages = "br.com.laercioskt.backend.repository")
 @EnableTransactionManagement
@@ -26,7 +28,8 @@ class ApplicationConfig {
 
         String username = dbUri.getUserInfo().split(":")[0];
         String password = dbUri.getUserInfo().split(":")[1];
-        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+        String dbUrl = format("jdbc:postgresql://%s:%d%s?sslmode=require",
+                dbUri.getHost(), dbUri.getPort(), dbUri.getPath());
 
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setUrl(dbUrl);

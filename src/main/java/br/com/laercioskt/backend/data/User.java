@@ -73,6 +73,15 @@ public class User implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", status=" + status +
+                ", category=" + category +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == null || id == -1) {
             return false;
