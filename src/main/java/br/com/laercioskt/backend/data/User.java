@@ -74,11 +74,12 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" +
-                "userName='" + userName + '\'' +
-                ", status=" + status +
-                ", category=" + category +
-                '}';
+        return """ 
+                User {
+                    userName = %s
+                    status = %s
+                    category = %s
+                } """.formatted(userName, status, category);
     }
 
     @Override
