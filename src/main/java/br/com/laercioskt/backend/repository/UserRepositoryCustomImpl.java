@@ -62,7 +62,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
     }
 
     private Predicate userNameLikePredicate(String filterText, CriteriaBuilder cb, Root<User> from) {
-        return cb.like(cb.upper(from.get(User_.userName)), "%" + filterText.toUpperCase() + "%");
+        return cb.like(cb.upper(from.get(User_.userName)), filterText.toUpperCase());
     }
 
     private Predicate categoryNameLikePredicate(String filterText, CriteriaBuilder cb, SetJoin<User, Category> join) {
