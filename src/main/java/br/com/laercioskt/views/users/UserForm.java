@@ -46,7 +46,7 @@ public class UserForm extends Div {
 
         viewLogic = sampleCrudLogic;
 
-        userName = new TextField("BlaBlaBla");
+        userName = new TextField("User name");
         userName.setWidth("100%");
         userName.setRequired(true);
         userName.setValueChangeMode(ValueChangeMode.EAGER);
