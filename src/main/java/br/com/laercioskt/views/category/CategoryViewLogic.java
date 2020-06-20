@@ -2,11 +2,8 @@ package br.com.laercioskt.views.category;
 
 import br.com.laercioskt.authentication.AccessControl;
 import br.com.laercioskt.authentication.AccessControlFactory;
-import br.com.laercioskt.backend.DataService;
 import br.com.laercioskt.backend.data.Category;
-import br.com.laercioskt.backend.data.User;
 import br.com.laercioskt.backend.service.CategoryService;
-import br.com.laercioskt.backend.service.UserService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.Notification;
 
@@ -103,7 +100,7 @@ public class CategoryViewLogic implements Serializable {
     }
 
     public void saveUser(Category category) {
-        final boolean newCategory = category.isNewCAtegory();
+        final boolean newCategory = category.isNewCategory();
         view.clearSelection();
         view.updateCategory(category);
         setFragmentParameter("");

@@ -23,7 +23,7 @@ public class CategoryDataProvider extends CallbackDataProvider<Category, Void> {
     }
 
     public void save(Category category) {
-        final boolean newCategory = category.isNewCAtegory();
+        final boolean newCategory = category.isNewCategory();
 
         service.updateCategory(category);
         if (newCategory) {

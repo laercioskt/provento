@@ -1,23 +1,16 @@
 package br.com.laercioskt.views.category;
 
 import br.com.laercioskt.backend.data.Category;
-import br.com.laercioskt.backend.data.User;
-import br.com.laercioskt.backend.data.UserStatus;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyModifier;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.checkbox.CheckboxGroup;
-import com.vaadin.flow.component.checkbox.CheckboxGroupVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.value.ValueChangeMode;
-
-import java.util.Collection;
 
 public class CategoryForm extends Div {
 
@@ -101,7 +94,7 @@ public class CategoryForm extends Div {
         if (category == null) {
             category = new Category();
         }
-        delete.setVisible(!category.isNewCAtegory());
+        delete.setVisible(!category.isNewCategory());
         currentCategory = category;
         binder.readBean(category);
     }

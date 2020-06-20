@@ -1,31 +1,18 @@
 package br.com.laercioskt.backend.data;
 
+import br.com.laercioskt.backend.data.base.BaseEntity;
+import org.hibernate.envers.Audited;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
-public class Category implements Serializable {
+@Audited
+public class Category extends BaseEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
-    private long id = -1;
     @Size(min = 2, message = "Category name must be at least two characters")
     private String name;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -41,31 +28,8 @@ public class Category implements Serializable {
     }
 
     
-    public boolean isNewCAtegory() {
+    public boolean isNewCategory() {
         return getId() == -1;
-    }
-    /*
-     * Vaadin DataProviders rely on properly implemented equals and hashcode
-     * methods.
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null || id == -1) {
-            return false;
-        }
-        if (obj instanceof Category) {
-            return id == ((Category) obj).id;
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        if (id == -1) {
-            return super.hashCode();
-        }
-
-        return Objects.hash(id);
     }
 
     public static class CategoryBuilder {

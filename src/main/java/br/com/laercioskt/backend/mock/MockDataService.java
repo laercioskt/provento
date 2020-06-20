@@ -51,7 +51,7 @@ public class MockDataService extends DataService {
     public synchronized void updateProduct(Product p) {
         if (p.getId() < 0) {
             // New product
-            p.setId(nextProductId++);
+            p.setId((long) nextProductId++);
             products.add(p);
             return;
         }
@@ -79,7 +79,7 @@ public class MockDataService extends DataService {
     @Override
     public void updateCategory(Category category) {
         if (category.getId() < 0) {
-            category.setId(nextCategoryId++);
+            category.setId((long) nextCategoryId++);
             categories.add(category);
         }
     }

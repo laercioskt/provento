@@ -81,14 +81,14 @@ public class MockDataGenerator {
 
     private static Category createCategory(String name) {
         Category c = new Category();
-        c.setId(nextCategoryId++);
+        c.setId((long) nextCategoryId++);
         c.setName(name);
         return c;
     }
 
     private static Product createProduct(List<Category> categories) {
         Product p = new Product();
-        p.setId(nextProductId++);
+        p.setId((long) nextProductId++);
         p.setProductName(generateName());
 
         p.setPrice(new BigDecimal((random.nextInt(250) + 50) / 10.0));
@@ -104,7 +104,7 @@ public class MockDataGenerator {
     
     private static User createUser(List<Category> categories) {
         User u = new User();
-        u.setId(nextUserId++);
+        u.setId((long) nextUserId++);
         u.setUserName(generateNameUser());
         u.setStatus(UserStatus.values()[random.nextInt(UserStatus.values().length)]);
         u.setPassword("senha");

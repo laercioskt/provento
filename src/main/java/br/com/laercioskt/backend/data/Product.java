@@ -1,17 +1,18 @@
 package br.com.laercioskt.backend.data;
 
+import br.com.laercioskt.backend.data.base.BaseEntity;
+import org.hibernate.envers.Audited;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Objects;
 import java.util.Set;
 
-public class Product implements Serializable {
+@Audited
+public class Product extends BaseEntity implements Serializable {
 
-    @NotNull
-    private long id = -1;
     @NotNull
     @Size(min = 2, message = "Product name must have at least two characters")
     private String productName = "";
@@ -22,14 +23,6 @@ public class Product implements Serializable {
     private int stockCount = 0;
     @NotNull
     private Availability availability = Availability.COMING;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getProductName() {
         return productName;
@@ -75,27 +68,4 @@ public class Product implements Serializable {
         return getId() == -1;
     }
 
-    /*
-     * Vaadin DataProviders rely on properly implemented equals and hashcode
-     * methods.
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null || id == -1) {
-            return false;
-        }
-        if (obj instanceof Product) {
-            return id == ((Product) obj).id;
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        if (id == -1) {
-            return super.hashCode();
-        }
-
-        return Objects.hash(id);
-    }
 }

@@ -1,21 +1,20 @@
 package br.com.laercioskt.backend.data;
 
+import br.com.laercioskt.backend.data.base.BaseEntity;
+import org.hibernate.envers.Audited;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "USERS")
-public class User implements Serializable {
+@Audited
+public class User extends BaseEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
-    private long id = -1;
     @NotNull
     @Size(min = 2, message = "User name must have at least two characters")
     private String userName = "";
@@ -27,14 +26,6 @@ public class User implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Category> category = new HashSet<>();
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getUserName() {
         return userName;
@@ -80,26 +71,6 @@ public class User implements Serializable {
                     status = %s
                     category = %s
                 } """.formatted(userName, status, category);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null || id == -1) {
-            return false;
-        }
-        if (obj instanceof User) {
-            return id == ((User) obj).id;
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        if (id == -1) {
-            return super.hashCode();
-        }
-
-        return Objects.hash(id);
     }
 
     public static class UserBuilder {
