@@ -1,6 +1,7 @@
 package br.com.laercioskt.views.users;
 
 import br.com.laercioskt.backend.data.User;
+import br.com.laercioskt.backend.data.base.ContextLookup;
 import br.com.laercioskt.backend.service.UserService;
 import br.com.laercioskt.views.MainLayout;
 import com.vaadin.flow.component.Key;
@@ -13,7 +14,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Route(value = "Users", layout = MainLayout.class)
 public class UserView extends HorizontalLayout implements HasUrlParameter<String> {
@@ -31,7 +31,10 @@ public class UserView extends HorizontalLayout implements HasUrlParameter<String
 
     private final UserDataProvider dataProvider;
 
-    public UserView(@Autowired UserService userService) {
+    public UserView() {
+        UserService userService = ContextLookup.getBean(UserService.class);
+        assert userService != null;
+
         // Sets the width and the height of InventoryView to "100%".
         setSizeFull();
         final HorizontalLayout topLayout = createTopBar();

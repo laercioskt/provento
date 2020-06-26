@@ -39,7 +39,7 @@ public class UserService {
         return userRepository.count();
     }
 
-    public User createOrUpdateUser(User user) {
+    public User save(User user) {
         return userRepository.save(user);
     }
 

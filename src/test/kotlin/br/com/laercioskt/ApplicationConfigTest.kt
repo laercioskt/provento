@@ -1,6 +1,7 @@
 package br.com.laercioskt
 
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.ComponentScan
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType.H2
@@ -14,6 +15,7 @@ import javax.sql.DataSource
 
 @EnableJpaRepositories(basePackages = ["br.com.laercioskt.backend.repository"])
 @EnableTransactionManagement
+@ComponentScan(basePackages = ["br.com.laercioskt.backend"])
 class ApplicationConfigTest {
 
     @Bean

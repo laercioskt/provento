@@ -22,7 +22,7 @@ public class UserDataProvider extends CallbackDataProvider<User, Void> {
     public void save(User user) {
         final boolean newUser = user.isNewUser();
 
-        service.createOrUpdateUser(user);
+        service.save(user);
         if (newUser) {
             refreshAll();
         } else {
