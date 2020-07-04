@@ -128,12 +128,12 @@ internal class UserRepositoryCustomImplTest {
                     CategoryBuilder()
                             .withName(name).build())
 
-    private fun createUser(userName: String, password: String, status: UserStatus, admin: Category?) {
+    private fun createUser(userName: String, password: String, status: UserStatus, category: Category) {
         userRepository.save(
                 UserBuilder().withUserName(userName)
                         .withPassword(password)
                         .withStatus(status)
-                        .withCategory(admin)
+                        .withCategory(category)
                         .build())
     }
 
