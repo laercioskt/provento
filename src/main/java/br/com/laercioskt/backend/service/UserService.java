@@ -47,7 +47,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public Collection<Category> getAllCategories() {
+    public Collection<Category> allCategories() {
         List<Category> all = categoryRepository.findAll();
         if (all.isEmpty())
             return mockCategories();
@@ -65,7 +65,7 @@ public class UserService {
         return categoryRepository.save(category);
     }
 
-    public Optional<User> getUserById(int userId) {
+    public Optional<User> userById(int userId) {
         return userRepository.findById((long) userId);
     }
 

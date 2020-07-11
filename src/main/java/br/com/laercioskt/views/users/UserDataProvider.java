@@ -7,6 +7,8 @@ import com.vaadin.flow.data.provider.CallbackDataProvider;
 import java.util.Locale;
 import java.util.Objects;
 
+import static java.util.Objects.requireNonNull;
+
 public class UserDataProvider extends CallbackDataProvider<User, Void> {
 
     private final UserService service;
@@ -36,7 +38,7 @@ public class UserDataProvider extends CallbackDataProvider<User, Void> {
     }
 
     public void setFilter(String filterText) {
-        Objects.requireNonNull(filterText, "Filter text cannot be null.");
+        requireNonNull(filterText, "Filter text cannot be null.");
         if (Objects.equals(this.filterText, filterText.trim())) {
             return;
         }
@@ -45,7 +47,7 @@ public class UserDataProvider extends CallbackDataProvider<User, Void> {
 
     @Override
     public Integer getId(User user) {
-        Objects.requireNonNull(user, "Cannot provide an id for a null user.");
+        requireNonNull(user, "Cannot provide an id for a null user.");
 
         return Math.toIntExact(user.getId());
     }

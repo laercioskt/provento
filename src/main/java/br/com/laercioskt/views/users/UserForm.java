@@ -21,15 +21,12 @@ import java.util.Collection;
 
 public class UserForm extends Div {
 
-    private final VerticalLayout content;
-
     private final TextField userName;
     private final TextField password;
     private final Select<UserStatus> status;
     private final CheckboxGroup<Category> category;
     private Button save;
     private Button discard;
-    private Button cancel;
     private final Button delete;
 
     private final UserViewLogic viewLogic;
@@ -39,7 +36,7 @@ public class UserForm extends Div {
     public UserForm(UserViewLogic sampleCrudLogic) {
         setClassName("user-form");
 
-        content = new VerticalLayout();
+        VerticalLayout content = new VerticalLayout();
         content.setSizeUndefined();
         content.addClassName("user-form-content");
         add(content);
@@ -97,7 +94,7 @@ public class UserForm extends Div {
         discard.addClickListener(
                 event -> viewLogic.editUser(currentUser));
 
-        cancel = new Button("Cancel");
+        Button cancel = new Button("Cancel");
         cancel.setWidth("100%");
         cancel.addClickListener(event -> viewLogic.cancelUser());
         cancel.addClickShortcut(Key.ESCAPE);

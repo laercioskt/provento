@@ -2,7 +2,6 @@ package br.com.laercioskt.views.users;
 
 import br.com.laercioskt.authentication.AccessControl;
 import br.com.laercioskt.authentication.AccessControlFactory;
-import br.com.laercioskt.backend.DataService;
 import br.com.laercioskt.backend.data.User;
 import br.com.laercioskt.backend.service.UserService;
 import com.vaadin.flow.component.UI;
@@ -31,7 +30,7 @@ public class UserViewLogic implements Serializable {
     }
 
     /**
-     * Does the initialization of the inventory view including disabling the
+     * Does the initialization of the user view including disabling the
      * buttons if the user doesn't have access.
      */
     public void init() {
@@ -47,7 +46,7 @@ public class UserViewLogic implements Serializable {
     }
 
     /**
-     * Updates the fragment without causing InventoryViewLogic navigator to
+     * Updates the fragment without causing UserViewLogic navigator to
      * change view. It actually appends the userId as a parameter to the URL.
      * The parameter is set to keep the view state the same during e.g. a
      * refresh and to enable bookmarking of individual user selections.
@@ -69,15 +68,14 @@ public class UserViewLogic implements Serializable {
      * with the given userId and shows its data in the form fields so the
      * user can edit them.
      *
-     * @param userId
+     * @param userId - user internal id
      */
     public void enter(String userId) {
         if (userId != null && !userId.isEmpty()) {
             if (userId.equals("new")) {
                 newUser();
             } else {
-                // Ensure this is selected even if coming directly here from
-                // login
+                // Ensure this is selected even if coming directly here from login
                 try {
                     final int pid = Integer.parseInt(userId);
                     final Optional<User> user = findUser(pid);
@@ -88,7 +86,7 @@ public class UserViewLogic implements Serializable {
                         view.showForm(false);
                     }
 
-                } catch (final NumberFormatException e) {
+                } catch (final NumberFormatException ignored) {
                 }
             }
         } else {
@@ -97,7 +95,7 @@ public class UserViewLogic implements Serializable {
     }
 
     private Optional<User> findUser(int userId) {
-        return userService.getUserById(userId);
+        return userService.userById(userId);
     }
 
     public void saveUser(User user) {
@@ -105,8 +103,7 @@ public class UserViewLogic implements Serializable {
         view.clearSelection();
         view.updateUser(user);
         setFragmentParameter("");
-        view.showNotification(user.getUserName()
-                + (newUser ? " created" : " updated"));
+        view.showNotification(user.getUserName() + (newUser ? " created" : " updated"));
     }
 
     public void deleteUser(User user) {

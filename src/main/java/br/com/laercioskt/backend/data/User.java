@@ -79,6 +79,7 @@ public class User extends BaseEntity implements Serializable {
         private String password;
         private UserStatus status = UserStatus.ACTIVE;
         private final Set<Category> categories = new HashSet<>();
+        private Long id;
 
         public UserBuilder() {
         }
@@ -103,14 +104,22 @@ public class User extends BaseEntity implements Serializable {
             return this;
         }
 
+        public UserBuilder withId(long id) {
+            this.id = id;
+            return this;
+        }
+
         public User build() {
             User user = new User();
+            if (id != null)
+                user.setId(id);
             user.setUserName(this.userName);
             user.setPassword(this.password);
             user.setStatus(this.status);
             user.setCategory(this.categories);
             return user;
         }
+
     }
 
 
