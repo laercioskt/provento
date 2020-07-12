@@ -10,7 +10,6 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations.initMocks
-import org.mockito.Spy
 import org.springframework.data.domain.PageRequest.of
 import org.springframework.data.domain.Sort.Order
 import java.util.*
@@ -19,7 +18,6 @@ import kotlin.test.Test
 
 internal class UserServiceTest {
 
-    @Spy
     @InjectMocks
     private lateinit var userService: UserService
 

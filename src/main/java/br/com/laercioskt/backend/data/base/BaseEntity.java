@@ -46,6 +46,10 @@ public abstract class BaseEntity implements Identifiable {
         return false;
     }
 
+    public boolean isNew() {
+        return getId() == -1;
+    }
+
     @Override
     public int hashCode() {
         if (id == -1) {

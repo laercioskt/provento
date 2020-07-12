@@ -59,10 +59,6 @@ public class User extends BaseEntity implements Serializable {
         this.password = password;
     }
 
-    public boolean isNewUser() {
-        return getId() == -1;
-    }
-
     @Override
     public String toString() {
         return """ 

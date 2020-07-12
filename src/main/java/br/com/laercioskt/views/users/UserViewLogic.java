@@ -99,7 +99,7 @@ public class UserViewLogic implements Serializable {
     }
 
     public void saveUser(User user) {
-        final boolean newUser = user.isNewUser();
+        final boolean newUser = user.isNew();
         view.clearSelection();
         view.updateUser(user);
         setFragmentParameter("");

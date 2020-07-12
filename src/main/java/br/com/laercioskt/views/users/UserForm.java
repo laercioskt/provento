@@ -123,7 +123,7 @@ public class UserForm extends Div {
         if (user == null) {
             user = new User();
         }
-        delete.setVisible(!user.isNewUser());
+        delete.setVisible(!user.isNew());
         currentUser = user;
         binder.readBean(user);
     }
