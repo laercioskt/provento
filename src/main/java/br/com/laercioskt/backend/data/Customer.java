@@ -69,12 +69,12 @@ public class Customer extends BaseEntity implements Serializable {
         }
 
         public Customer build() {
-            Customer user = new Customer();
+            Customer customer = new Customer();
             if (id != null)
-                user.setId(id);
-            user.setName(this.name);
-            user.setCode(this.code);
-            return user;
+                customer.setId(id);
+            customer.setName(this.name);
+            customer.setCode(this.code);
+            return customer;
         }
 
     }
