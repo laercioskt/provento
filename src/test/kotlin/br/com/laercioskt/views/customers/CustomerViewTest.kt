@@ -11,6 +11,8 @@ import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.grid.Grid
 import com.vaadin.flow.component.textfield.TextField
+import org.amshove.kluent.`should be equal to`
+import org.amshove.kluent.should
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -71,6 +73,14 @@ internal class CustomerViewTest : ViewTest() {
         grid.expectRow(3, "customer1234", "code456789")
         grid.expectRow(4, "customer12345", "code56789")
         grid.expectRow(5, "Customer 2", "1234")
+    }
+
+    @Test
+    fun `placeholder of filter field`() {
+        UI.getCurrent().navigate(CustomerView::class.java)
+
+        _get<TextField> { id = CustomerView.CUSTOMER_VIEW_FILTER_ID }
+                .placeholder.`should be equal to`("Filter name or code")
     }
 
     private fun createCustomer(name: String, code: String) =

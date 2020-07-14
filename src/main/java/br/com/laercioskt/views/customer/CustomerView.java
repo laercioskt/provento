@@ -24,6 +24,7 @@ import static java.util.Objects.requireNonNull;
 public class CustomerView extends HorizontalLayout implements HasUrlParameter<String> {
 
     public static final String VIEW_NAME = "Customers";
+    public static final String CUSTOMER_VIEW_FILTER_ID = "CustomerViewFilterID";
 
     private final CustomerGrid grid;
     private final CustomerForm form;
@@ -70,7 +71,8 @@ public class CustomerView extends HorizontalLayout implements HasUrlParameter<St
 
     public HorizontalLayout createTopBar() {
         filter = new TextField();
-        filter.setPlaceholder("Filter name");
+        filter.setId(CUSTOMER_VIEW_FILTER_ID);
+        filter.setPlaceholder("Filter name or code");
         filter.addValueChangeListener(event -> dataProvider.refreshAll());
         filter.addFocusShortcut(Key.KEY_F, KeyModifier.CONTROL);
 
