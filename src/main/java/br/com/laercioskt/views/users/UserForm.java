@@ -3,6 +3,7 @@ package br.com.laercioskt.views.users;
 import br.com.laercioskt.backend.data.Category;
 import br.com.laercioskt.backend.data.User;
 import br.com.laercioskt.backend.data.UserStatus;
+import br.com.laercioskt.views.ConfirmDialog;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyModifier;
 import com.vaadin.flow.component.button.Button;
@@ -108,7 +109,10 @@ public class UserForm extends Div {
                 ButtonVariant.LUMO_PRIMARY);
         delete.addClickListener(event -> {
             if (currentUser != null) {
-                viewLogic.deleteUser(currentUser);
+                new ConfirmDialog(
+                        "Please confirm",
+                        "Are you sure you want to delete the user?",
+                        "Yes", () -> viewLogic.deleteUser(currentUser)).open();
             }
         });
 

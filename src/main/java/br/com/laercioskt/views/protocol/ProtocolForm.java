@@ -1,6 +1,6 @@
-package br.com.laercioskt.views.customer;
+package br.com.laercioskt.views.protocol;
 
-import br.com.laercioskt.backend.data.Customer;
+import br.com.laercioskt.backend.data.Protocol;
 import br.com.laercioskt.views.ConfirmDialog;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyModifier;
@@ -13,42 +13,41 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.value.ValueChangeMode;
 
-public class CustomerForm extends Div {
+public class ProtocolForm extends Div {
 
-    private final TextField name;
+    private final TextField note;
     private final TextField code;
     private Button save;
     private Button discard;
     private final Button delete;
 
-    private final CustomerViewLogic viewLogic;
-    private final Binder<Customer> binder;
-    private Customer currentCustomer;
+    private final ProtocolViewLogic viewLogic;
+    private final Binder<Protocol> binder;
+    private Protocol currentProtocol;
 
     private boolean hasChanges = false;
 
-    public CustomerForm(CustomerViewLogic viewLogic) {
-        setClassName("customer-form");
+    public ProtocolForm(ProtocolViewLogic viewLogic) {
+        setClassName("protocol-form");
 
         VerticalLayout content = new VerticalLayout();
         content.setSizeUndefined();
-        content.addClassName("customer-form-content");
+        content.addClassName("protocol-form-content");
         add(content);
 
         this.viewLogic = viewLogic;
 
-        name = new TextField("Customer name");
-        name.setWidth("100%");
-        name.setRequired(true);
-        name.setValueChangeMode(ValueChangeMode.EAGER);
-        content.add(name);
+        note = new TextField("Protocol note");
+        note.setWidth("100%");
+        note.setValueChangeMode(ValueChangeMode.EAGER);
+        content.add(note);
 
-        code = new TextField("Customer code");
+        code = new TextField("Protocol code");
         code.setWidth("100%");
         code.setValueChangeMode(ValueChangeMode.EAGER);
         content.add(code);
 
-        binder = new BeanValidationBinder<>(Customer.class);
+        binder = new BeanValidationBinder<>(Protocol.class);
         binder.bindInstanceFields(this);
 
         binder.addStatusChangeListener(event -> {
@@ -62,9 +61,9 @@ public class CustomerForm extends Div {
         save.setWidth("100%");
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         save.addClickListener(event -> {
-            if (currentCustomer != null
-                    && binder.writeBeanIfValid(currentCustomer)) {
-                this.viewLogic.saveCustomer(currentCustomer);
+            if (currentProtocol != null
+                    && binder.writeBeanIfValid(currentProtocol)) {
+                this.viewLogic.saveProtocol(currentProtocol);
             }
         });
         save.addClickShortcut(Key.KEY_S, KeyModifier.CONTROL);
@@ -72,7 +71,7 @@ public class CustomerForm extends Div {
         discard = new Button("Discard changes");
         discard.setWidth("100%");
         discard.addClickListener(
-                event -> this.viewLogic.editCustomer(currentCustomer));
+                event -> this.viewLogic.editProtocol(currentProtocol));
 
         Button cancel = new Button("Cancel");
         cancel.setWidth("100%");
@@ -81,14 +80,14 @@ public class CustomerForm extends Div {
                 new ConfirmDialog(
                         "Please confirm",
                         "There are changes in form. Do you want to discard?",
-                        "Yes", this.viewLogic::cancelCustomer).open();
+                        "Yes", this.viewLogic::cancelProtocol).open();
             } else {
-                this.viewLogic.cancelCustomer();
+                this.viewLogic.cancelProtocol();
             }
         });
         cancel.addClickShortcut(Key.ESCAPE);
         getElement()
-                .addEventListener("keydown", event -> this.viewLogic.cancelCustomer())
+                .addEventListener("keydown", event -> this.viewLogic.cancelProtocol())
                 .setFilter("event.key == 'Escape'");
 
         delete = new Button("Delete");
@@ -96,23 +95,23 @@ public class CustomerForm extends Div {
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR,
                 ButtonVariant.LUMO_PRIMARY);
         delete.addClickListener(event -> {
-            if (currentCustomer != null) {
+            if (currentProtocol != null) {
                 new ConfirmDialog(
                         "Please confirm",
-                        "Are you sure you want to delete the customer?",
-                        "Yes", () -> this.viewLogic.deleteCustomer(currentCustomer)).open();
+                        "Are you sure you want to delete the protocol?",
+                        "Yes", () -> this.viewLogic.deleteProtocol(currentProtocol)).open();
             }
         });
 
         content.add(save, discard, delete, cancel);
     }
 
-    public void editCustomer(Customer customer) {
-        if (customer == null) {
-            customer = new Customer();
+    public void editProtocol(Protocol protocol) {
+        if (protocol == null) {
+            protocol = new Protocol();
         }
-        delete.setVisible(!customer.isNew());
-        currentCustomer = customer;
-        binder.readBean(customer);
+        delete.setVisible(!protocol.isNew());
+        currentProtocol = protocol;
+        binder.readBean(protocol);
     }
 }

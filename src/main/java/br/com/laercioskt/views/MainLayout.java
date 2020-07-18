@@ -6,6 +6,7 @@ import br.com.laercioskt.views.about.AboutView;
 import br.com.laercioskt.views.category.CategoryView;
 import br.com.laercioskt.views.customer.CustomerView;
 import br.com.laercioskt.views.inventory.InventoryView;
+import br.com.laercioskt.views.protocol.ProtocolView;
 import br.com.laercioskt.views.users.UserView;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
@@ -31,10 +32,7 @@ import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 
 
-/**
- * The main layout. Contains the navigation menu.
- */
-@Theme(value = Lumo.class, variant = Lumo.DARK)
+@Theme(value = Lumo.class, variant = Lumo.LIGHT)
 @CssImport("./styles/shared-styles.css")
 @CssImport(value = "./styles/menu-buttons.css", themeFor = "vaadin-button")
 public class MainLayout extends AppLayout implements RouterLayout {
@@ -74,12 +72,14 @@ public class MainLayout extends AppLayout implements RouterLayout {
         addToDrawer(createMenuLink(AboutView.class, AboutView.VIEW_NAME,
                 VaadinIcon.INFO_CIRCLE.create()));
 
-        addToDrawer(createMenuLink(UserView.class,UserView.VIEW_NAME,
+        addToDrawer(createMenuLink(UserView.class, UserView.VIEW_NAME,
                 VaadinIcon.USER.create()));
 
         addToDrawer(createMenuLink(CategoryView.class, CategoryView.VIEW_NAME, VaadinIcon.PENCIL.create()));
 
         addToDrawer(createMenuLink(CustomerView.class, CustomerView.VIEW_NAME, VaadinIcon.HAND.create()));
+
+        addToDrawer(createMenuLink(ProtocolView.class, ProtocolView.VIEW_NAME, VaadinIcon.ENVELOPE.create()));
 
         // Create logout button but don't add it yet; admin view might be added
         // in between (see #onAttach())

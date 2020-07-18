@@ -100,6 +100,21 @@ body {
     margin-top: var(--_vaadin-app-layout-navbar-offset-size);
 }
 
+.protocol-form {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    overflow: auto;
+    background: var(--lumo-base-color);
+    box-shadow: var(--overlay-box-shadow);
+    width: 40%;
+}
+
+.protocol-form-content {
+    margin-top: var(--_vaadin-app-layout-navbar-offset-size);
+}
+
 /*
  * Special rules for narrow screens (responsive design rules)
  */
@@ -136,6 +151,13 @@ body {
     }
 
     .customer-form {
+            width: 100%;
+
+            /* Prevent text-fields from overflowing on narrow screens */
+            --vaadin-text-field-default-width: 6em;
+        }
+
+    .protocol-form {
         width: 100%;
 
         /* Prevent text-fields from overflowing on narrow screens */
