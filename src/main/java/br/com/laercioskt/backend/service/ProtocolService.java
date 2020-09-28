@@ -19,8 +19,11 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 @Service
 public class ProtocolService {
 
-    @Autowired
-    ProtocolRepository protocolRepository;
+    final ProtocolRepository protocolRepository;
+
+    public ProtocolService(ProtocolRepository protocolRepository) {
+        this.protocolRepository = protocolRepository;
+    }
 
     public List<Protocol> find(Query<Protocol, Void> query, String filterText) {
         List<Order> sortOrders = query.getSortOrders().stream()

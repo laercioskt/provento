@@ -5,11 +5,11 @@ import br.com.laercioskt.backend.data.base.ContextLookup;
 import br.com.laercioskt.backend.service.CustomerService;
 import br.com.laercioskt.backend.service.ProtocolService;
 import br.com.laercioskt.views.MainLayout;
+import br.com.laercioskt.views.components.ButtonFactory;
+import br.com.laercioskt.views.components.LayoutFactory;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyModifier;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -51,7 +51,7 @@ public class ProtocolView extends HorizontalLayout implements HasUrlParameter<St
         dataProvider = new ProtocolDataProvider(protocolService,
                 query -> protocolService.find(query, filter.getValue()).stream(),
                 query -> (int) protocolService.count(filter.getValue()));
-        grid.setDataProvider(dataProvider);
+        grid.setItems(dataProvider);
         viewLogic = new ProtocolViewLogic(this, protocolService, customerService);
         grid.asSingleSelect().addValueChangeListener(
                 event -> viewLogic.rowSelected(event.getValue()));
@@ -78,20 +78,9 @@ public class ProtocolView extends HorizontalLayout implements HasUrlParameter<St
         filter.addValueChangeListener(event -> dataProvider.refreshAll());
         filter.addFocusShortcut(Key.KEY_F, KeyModifier.CONTROL);
 
-        newProtocol = new Button("New protocol");
-        newProtocol.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        newProtocol.setIcon(VaadinIcon.PLUS_CIRCLE.create());
-        newProtocol.addClickListener(click -> viewLogic.newProtocol());
-        newProtocol.addClickShortcut(Key.KEY_N, KeyModifier.ALT);
+        newProtocol = ButtonFactory.newObject("New protocol", click -> viewLogic.newProtocol());
 
-        final HorizontalLayout topLayout = new HorizontalLayout();
-        topLayout.setWidth("100%");
-        topLayout.add(filter);
-        topLayout.add(newProtocol);
-        topLayout.setVerticalComponentAlignment(Alignment.START, filter);
-        topLayout.expand(filter);
-
-        return topLayout;
+        return LayoutFactory.createTopBar(filter, newProtocol);
     }
 
     public void showNotification(String msg) {

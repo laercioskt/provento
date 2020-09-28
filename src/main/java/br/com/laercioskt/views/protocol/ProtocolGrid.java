@@ -35,15 +35,9 @@ public class ProtocolGrid extends Grid<Protocol> {
     }
 
     private void setColumnVisibility(int width) {
-        if (width > 550) {
-            getColumnByKey(CODE).setVisible(true);
-            getColumnByKey(CUSTOMER).setVisible(true);
-            getColumnByKey(NOTE).setVisible(true);
-        } else {
-            getColumnByKey(CODE).setVisible(true);
-            getColumnByKey(CUSTOMER).setVisible(true);
-            getColumnByKey(NOTE).setVisible(false);
-        }
+        getColumnByKey(CODE).setVisible(true);
+        getColumnByKey(CUSTOMER).setVisible(true);
+        getColumnByKey(NOTE).setVisible(width > 550);
     }
 
     @Override
