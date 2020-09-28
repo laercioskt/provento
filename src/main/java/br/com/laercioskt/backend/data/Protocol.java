@@ -6,20 +6,30 @@ import org.hibernate.envers.Audited;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Audited
 public class Protocol extends BaseEntity implements Serializable {
 
-    @NotNull
-    private String note = "";
-
     private String code;
 
+    private String note;
+
     @ManyToOne
+    @NotNull(message = "Customer should be informed")
     private Customer customer;
+
+    @OneToMany(cascade = ALL, orphanRemoval = true, fetch = LAZY, targetEntity = Document.class)
+//    @Size(min = 2, message = "Protocol should have at least 2 itens")
+    private List<Document> documents = new ArrayList<>();
 
     public String getNote() {
         return note;
@@ -43,6 +53,14 @@ public class Protocol extends BaseEntity implements Serializable {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public List<Document> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
     }
 
     @Override

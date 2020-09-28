@@ -2,6 +2,7 @@ package br.com.laercioskt.views.protocol;
 
 import br.com.laercioskt.backend.data.Protocol;
 import br.com.laercioskt.backend.data.base.ContextLookup;
+import br.com.laercioskt.backend.service.CustomerService;
 import br.com.laercioskt.backend.service.ProtocolService;
 import br.com.laercioskt.views.MainLayout;
 import com.vaadin.flow.component.Key;
@@ -39,6 +40,7 @@ public class ProtocolView extends HorizontalLayout implements HasUrlParameter<St
 
     public ProtocolView() {
         ProtocolService protocolService = ContextLookup.getBean(ProtocolService.class);
+        CustomerService customerService = ContextLookup.getBean(CustomerService.class);
         requireNonNull(protocolService,
                 "it's not expected use of ProtocolView without protocolService instance.");
 
@@ -50,7 +52,7 @@ public class ProtocolView extends HorizontalLayout implements HasUrlParameter<St
                 query -> protocolService.find(query, filter.getValue()).stream(),
                 query -> (int) protocolService.count(filter.getValue()));
         grid.setDataProvider(dataProvider);
-        viewLogic = new ProtocolViewLogic(this, protocolService);
+        viewLogic = new ProtocolViewLogic(this, protocolService, customerService);
         grid.asSingleSelect().addValueChangeListener(
                 event -> viewLogic.rowSelected(event.getValue()));
         form = new ProtocolForm(viewLogic);

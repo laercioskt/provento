@@ -2,22 +2,30 @@ package br.com.laercioskt.views.protocol;
 
 import br.com.laercioskt.authentication.AccessControl;
 import br.com.laercioskt.authentication.AccessControlFactory;
+import br.com.laercioskt.backend.data.Customer;
 import br.com.laercioskt.backend.data.Protocol;
+import br.com.laercioskt.backend.service.CustomerService;
 import br.com.laercioskt.backend.service.ProtocolService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.data.provider.Query;
 
 import java.io.Serializable;
 import java.util.Optional;
+import java.util.stream.Stream;
+
+import static java.util.Collections.emptyList;
 
 public class ProtocolViewLogic implements Serializable {
 
     private final ProtocolView view;
     private final ProtocolService protocolService;
+    private final CustomerService customerService;
 
-    public ProtocolViewLogic(ProtocolView view, ProtocolService protocolService) {
+    public ProtocolViewLogic(ProtocolView view, ProtocolService protocolService, CustomerService customerService) {
         this.view = view;
         this.protocolService = protocolService;
+        this.customerService = customerService;
     }
 
     public void init() {
@@ -75,7 +83,7 @@ public class ProtocolViewLogic implements Serializable {
         view.clearSelection();
         view.updateProtocol(protocol);
         setFragmentParameter("");
-        view.showNotification(protocol.getNote() + (newProtocol ? " created" : " updated"));
+        view.showNotification("Protocol " + protocol.getCode() + (newProtocol ? " created" : " updated"));
     }
 
     public void deleteProtocol(Protocol protocol) {
@@ -104,5 +112,15 @@ public class ProtocolViewLogic implements Serializable {
         if (AccessControlFactory.getInstance().createAccessControl().isUserInRole(AccessControl.ADMIN_ROLE_NAME)) {
             editProtocol(protocol);
         }
+    }
+
+    public Stream<Customer> customers(String filter, int offset, int limit) {
+        Query<Customer, Void> query
+                = new Query<>(offset, limit, emptyList(), null, null);
+        return customerService.find(query, filter).stream();
+    }
+
+    public Integer customersCount(String filter) {
+        return Math.toIntExact(customerService.count(filter));
     }
 }

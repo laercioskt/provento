@@ -1,12 +1,13 @@
 package br.com.laercioskt.views.protocol;
 
+import br.com.laercioskt.backend.data.Customer;
 import br.com.laercioskt.backend.data.Protocol;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
+import org.jetbrains.annotations.NotNull;
 
-import static br.com.laercioskt.backend.data.Protocol_.CODE;
-import static br.com.laercioskt.backend.data.Protocol_.NOTE;
+import static br.com.laercioskt.backend.data.Protocol_.*;
 
 public class ProtocolGrid extends Grid<Protocol> {
 
@@ -17,6 +18,10 @@ public class ProtocolGrid extends Grid<Protocol> {
                 .setFlexGrow(20).setSortable(true)
                 .setKey(CODE);
 
+        addColumn(p -> getCustomerLabel(p.getCustomer())).setHeader("Protocol customer")
+                .setFlexGrow(20).setSortable(true)
+                .setKey(CUSTOMER);
+
         addColumn(Protocol::getNote).setHeader("Protocol note")
                 .setFlexGrow(20).setSortable(true)
                 .setKey(NOTE);
@@ -24,14 +29,20 @@ public class ProtocolGrid extends Grid<Protocol> {
         UI.getCurrent().getPage().addBrowserWindowResizeListener(e -> setColumnVisibility(e.getWidth()));
     }
 
+    @NotNull
+    private String getCustomerLabel(Customer customer) {
+        return customer.getCode() + " - " + customer.getName();
+    }
+
     private void setColumnVisibility(int width) {
-        // TODO we'll add more fields soon
         if (width > 550) {
             getColumnByKey(CODE).setVisible(true);
+            getColumnByKey(CUSTOMER).setVisible(true);
             getColumnByKey(NOTE).setVisible(true);
         } else {
             getColumnByKey(CODE).setVisible(true);
-            getColumnByKey(NOTE).setVisible(true);
+            getColumnByKey(CUSTOMER).setVisible(true);
+            getColumnByKey(NOTE).setVisible(false);
         }
     }
 
