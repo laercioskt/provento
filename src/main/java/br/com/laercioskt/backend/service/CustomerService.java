@@ -19,8 +19,11 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 @Service
 public class CustomerService {
 
-    @Autowired
-    CustomerRepository customerRepository;
+    final CustomerRepository customerRepository;
+
+    public CustomerService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
     public List<Customer> find(Query<Customer, Void> query, String filterText) {
         List<Order> sortOrders = query.getSortOrders().stream()
